@@ -1,0 +1,24 @@
+{
+  "name": "iot-blockchain-framework",
+  "version": "1.0.0",
+  "scripts": {
+    "start:server": "cd server && node index.cjs",
+    "start:client": "cd client && npm run dev",
+    "start:sim": "cd simulated_iot && node simulate.cjs",
+    "deploy:contract": "cd contracts && npx hardhat run scripts/deploy.cjs --network localhost",
+    "dev": "npx concurrently \"npm run start:server\" \"npm run start:client\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.1"
+  },
+  "dependencies": {
+    "axios": "^1.15.0",
+    "cors": "^2.8.6",
+    "csv-parser": "^3.2.0",
+    "dotenv": "^17.4.2",
+    "ethers": "^6.16.0",
+    "express": "^5.2.1",
+    "mongoose": "^9.4.1",
+    "nodemon": "^3.1.14"
+  }
+}
