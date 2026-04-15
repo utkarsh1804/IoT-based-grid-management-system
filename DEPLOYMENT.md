@@ -1,53 +1,100 @@
-# 🚀 IoT-Ledger Deployment Guide
+# 🚀 Netlify Deployment Guide
 
-This guide covers deploying the IoT-Ledger framework to various platforms.
+## Step-by-Step Deployment Instructions
 
-## 📋 Pre-deployment Checklist
+### 1. Prepare Your Repository
+✅ Your code is already pushed to GitHub
+✅ Build configuration is ready (`netlify.toml`)
+✅ Environment variables are configured
 
-- [ ] All dependencies installed (`npm install` in root, client, contracts)
-- [ ] Client builds successfully (`cd client && npm run build`)
-- [ ] Smart contracts compile (`npm run deploy:contract`)
-- [ ] Environment variables configured
-- [ ] Git repository initialized and committed
+### 2. Deploy Frontend to Netlify
 
-## 🌐 Netlify Deployment
+1. **Go to Netlify**
+   - Visit: https://netlify.com
+   - Sign up/Login with your GitHub account
 
-### Option 1: Direct GitHub Connection (Recommended)
+2. **Create New Site**
+   - Click "Add new site" → "Import an existing project"
+   - Choose "Deploy with GitHub"
 
-1. **Create GitHub Repository**
-   ```bash
-   # If you haven't already
-   git remote add origin https://github.com/your-username/iot-blockchain-framework.git
-   git branch -M main
-   git push -u origin main
-   ```
+3. **Connect Repository**
+   - Select your repository: `utkarsh1804/IoT-based-grid-management-system`
+   - Click "Configure"
 
-2. **Connect to Netlify**
-   - Go to [Netlify](https://app.netlify.com)
-   - Click "New site from Git"
-   - Connect your GitHub repository
-   - Netlify will auto-detect `netlify.toml` configuration
+4. **Build Settings** (should auto-detect from netlify.toml):
+   - **Base directory**: `client`
+   - **Build command**: `npm run build`
+   - **Publish directory**: `dist`
+   - **Node version**: 18
 
-3. **Configure Environment Variables**
-   In Netlify dashboard → Site settings → Environment variables:
-   ```
-   RPC_URL=https://sepolia.infura.io/v3/YOUR_INFURA_KEY
-   CONTRACT_ADDRESS=0x... (deployed contract address)
-   LOCATION=Delhi,IN
-   NODE_VERSION=18
-   ```
+5. **Environment Variables**
+   - Add: `VITE_API_URL` = `https://your-backend-url.onrender.com`
+   - (You'll get the backend URL after deploying the backend)
 
-4. **Deploy Smart Contracts First**
-   ```bash
-   # Deploy to Sepolia testnet
-   cd contracts
-   npx hardhat run scripts/deploy.cjs --network sepolia
-   ```
+6. **Deploy**
+   - Click "Deploy site"
+   - Wait for build to complete (usually 2-3 minutes)
 
-### Option 2: Manual Upload
+### 3. Deploy Backend (Choose one option)
 
-1. **Build the Client**
-   ```bash
+#### Option A: Render (Recommended)
+1. Go to https://render.com
+2. Create account/Login
+3. Click "New" → "Web Service"
+4. Connect your GitHub repo
+5. Configure:
+   - **Name**: iot-grid-backend
+   - **Runtime**: Node
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm start`
+   - **Root Directory**: `server`
+6. Add environment variables (see README.md)
+7. Click "Create Web Service"
+
+#### Option B: Railway
+1. Go to https://railway.app
+2. Create account/Login
+3. Click "New Project" → "Deploy from GitHub repo"
+4. Select your repo
+5. Set root directory to `server`
+6. Add environment variables
+7. Deploy
+
+### 4. Update Frontend Environment Variable
+
+After backend deployment:
+1. Get your backend URL (e.g., `https://iot-grid-backend.onrender.com`)
+2. Go to Netlify dashboard → Site settings → Environment variables
+3. Update `VITE_API_URL` with your actual backend URL
+4. Trigger a new deploy
+
+### 5. Test Your Deployment
+
+1. Visit your Netlify site URL
+2. Check that the dashboard loads
+3. Test battery controls and charts
+4. Verify data is updating (backend connection)
+
+## 🎉 You're Done!
+
+Your IoT Grid Management System is now live and free to use!
+
+### Useful Links:
+- **Frontend**: Your Netlify URL
+- **Backend**: Your Render/Railway URL
+- **GitHub**: https://github.com/utkarsh1804/IoT-based-grid-management-system
+
+## Troubleshooting
+
+- **Build fails**: Check Netlify build logs
+- **Backend not connecting**: Verify VITE_API_URL is correct
+- **Charts not loading**: Check backend is running and accessible
+- **CORS errors**: Backend needs to allow your Netlify domain
+
+## Cost: FREE (for basic usage)
+- Netlify: 100GB bandwidth/month free
+- Render: 750 hours/month free
+- Railway: $5/month credit free
    cd client
    npm run build
    ```

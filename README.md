@@ -64,40 +64,68 @@ Visit `http://localhost:5173` for the battery management dashboard and `http://l
 
 ## 🌐 Deployment
 
-### Netlify (Frontend + API)
+### Frontend (Netlify - Free)
 
-1. **Connect to Netlify**
-   - Fork this repository
-   - Connect your GitHub repo to Netlify
-   - Netlify will automatically detect the `netlify.toml` configuration
-
-2. **Environment Variables**
-   Set these in Netlify dashboard:
-   ```
-   RPC_URL=https://sepolia.infura.io/v3/YOUR_INFURA_KEY
-   CONTRACT_ADDRESS=your_deployed_contract_address
-   LOCATION=Delhi,IN
+1. **Build the application**
+   ```bash
+   cd client
+   npm run build
    ```
 
-3. **Deploy Smart Contracts**
-   - Deploy to a testnet (Sepolia, Goerli) or mainnet
-   - Update the contract address in environment variables
+2. **Deploy to Netlify**
+   - Go to [Netlify](https://netlify.com)
+   - Sign up/Login with GitHub
+   - Click "New site from Git"
+   - Connect your GitHub repository
+   - Configure build settings:
+     - **Branch**: `master` (or your main branch)
+     - **Build command**: `cd client && npm run build`
+     - **Publish directory**: `client/dist`
+   - Click "Deploy site"
 
-### Manual Deployment
+3. **Environment Variables** (Required for backend connection)
+   - In Netlify dashboard, go to Site settings > Environment variables
+   - Add: `VITE_API_URL` = `https://your-backend-url.onrender.com` (replace with your actual backend URL)
 
-#### Frontend Only (Netlify)
-```bash
-cd client
-npm run build
-# Upload dist/ folder to Netlify
+### Backend (Free Hosting Options)
+
+The backend needs to be hosted separately since Netlify doesn't support persistent Node.js servers for free. Recommended free options:
+
+#### Option 1: Render (Recommended)
+1. Go to [Render](https://render.com)
+2. Create new Web Service
+3. Connect your GitHub repo
+4. Set build/runtime settings:
+   - **Runtime**: Node
+   - **Build Command**: `npm install` (in server directory)
+   - **Start Command**: `npm start` (in server directory)
+   - **Root Directory**: `server`
+
+#### Option 2: Railway
+1. Go to [Railway](https://railway.app)
+2. Create new project from GitHub
+3. Set root directory to `server`
+4. Set start command: `npm start`
+5. Deploy
+
+#### Option 3: Vercel (Serverless Functions)
+1. Create API routes in `api/` folder within the project
+2. Deploy to Vercel with serverless functions
+
+### Environment Variables for Backend
+
+Create a `.env` file in the `server` directory:
+
+```env
+PORT=3001
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+BLOCKCHAIN_RPC_URL=http://127.0.0.1:7545
 ```
 
-#### Full Stack (VPS/Cloud)
-```bash
-# Backend
-npm start:server
+---
 
-# Frontend
+## 📁 Project Structure
 cd client && npm run build && npm run preview
 
 # Blockchain
