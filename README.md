@@ -60,6 +60,23 @@ An intelligent battery charging management system that uses AI-powered predictio
 
 Visit `http://localhost:5173` for the battery management dashboard and `http://localhost:5000` for the API.
 
+## 🚀 Quick Start
+
+### Option 1: One-Click Startup (Windows)
+```bash
+# Double-click this file to start everything automatically
+start-system.bat
+```
+
+### Option 2: Manual Startup
+See [STARTUP_GUIDE.md](STARTUP_GUIDE.md) for detailed instructions.
+
+### Option 3: Development Mode
+```bash
+npm run dev  # Starts server + client
+npm run start:sim  # Starts simulation (in new terminal)
+```
+
 ---
 
 ## 🌐 Deployment
