@@ -2,6 +2,7 @@
   "name": "iot-blockchain-framework",
   "version": "1.0.0",
   "scripts": {
+    "start": "cd server && node index.cjs",
     "start:server": "cd server && node index.cjs",
     "start:client": "cd client && npm run dev",
     "start:sim": "cd simulated_iot && node simulate.cjs",
