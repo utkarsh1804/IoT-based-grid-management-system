@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: iot-grid-backend
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: RPC_URL
+        value: https://sepolia.infura.io/v3/YOUR_INFURA_KEY
+      - key: MONGO_URI
+        value: mongodb://localhost:27017/iotBlockchain
