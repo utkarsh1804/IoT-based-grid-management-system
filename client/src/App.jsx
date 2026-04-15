@@ -32,7 +32,113 @@ import {
   Thermometer,
   Wind,
   Sun,
-  Moon
+  Moon,
+  Play,
+  Pause,
+  Square,
+  RotateCcw,
+  AlertCircle,
+  CheckCircle,
+  Info,
+  Wrench,
+  Zap as Lightning,
+  Target,
+  Calendar,
+  Bell,
+  BellOff,
+  Volume2,
+  VolumeX,
+  Download,
+  Upload,
+  Power,
+  PowerOff,
+  Wifi,
+  WifiOff,
+  Lock,
+  Unlock,
+  Eye,
+  EyeOff,
+  Filter,
+  Search,
+  Plus,
+  Minus,
+  ChevronUp,
+  ChevronDown,
+  MoreHorizontal,
+  Grid,
+  List,
+  Monitor,
+  HardDrive,
+  Cpu as Processor,
+  MemoryStick,
+  Network,
+  Shield,
+  Users,
+  UserCheck,
+  FileText,
+  TrendingDown,
+  TrendingUp as TrendingUpIcon,
+  Activity as ActivityIcon,
+  Clock as ClockIcon,
+  Settings as SettingsIcon,
+  RefreshCw as RefreshIcon,
+  AlertTriangle as AlertIcon,
+  CheckCircle as CheckIcon,
+  XCircle,
+  Loader,
+  Save,
+  Edit,
+  Trash2,
+  Copy,
+  Share,
+  Star,
+  Heart,
+  Bookmark,
+  Flag,
+  Tag,
+  Layers,
+  Layout,
+  Maximize,
+  Minimize,
+  Move,
+  RotateCw,
+  ZoomIn,
+  ZoomOut,
+  Home,
+  MapPin,
+  Navigation,
+  Compass,
+  Crosshair,
+  Target as TargetIcon,
+  Circle,
+  Square as SquareIcon,
+  Triangle,
+  Hexagon,
+  Star as StarIcon,
+  Heart as HeartIcon,
+  Diamond,
+  Octagon,
+  Shield as ShieldIcon,
+  Crown,
+  Award,
+  Trophy,
+  Medal,
+  Gift,
+  Package,
+  Truck,
+  Plane,
+  Ship,
+  Car,
+  Bike,
+  Coffee,
+  Utensils,
+  ShoppingCart,
+  CreditCard,
+  DollarSign,
+  Euro,
+  PoundSterling,
+  Bitcoin,
+  DollarSign as DollarIcon
 } from 'lucide-react';
 import {
   AreaChart,
@@ -105,6 +211,18 @@ const Sidebar = ({ activeTab, setActiveTab, account, onConnect }) => (
         className={`sidebar-link w-full text-left flex items-center gap-3 p-3 rounded-xl transition-all ${activeTab === 'explorer' ? 'bg-green-500/10 text-green-600 border-l-4 border-green-500 pl-4' : 'text-slate-600 hover:bg-slate-100/50'}`}
       >
         <Link className="w-5 h-5" /> Explorer
+      </button>
+      <button
+        onClick={() => setActiveTab('diagnostics')}
+        className={`sidebar-link w-full text-left flex items-center gap-3 p-3 rounded-xl transition-all ${activeTab === 'diagnostics' ? 'bg-green-500/10 text-green-600 border-l-4 border-green-500 pl-4' : 'text-slate-600 hover:bg-slate-100/50'}`}
+      >
+        <Monitor className="w-5 h-5" /> System Monitor
+      </button>
+      <button
+        onClick={() => setActiveTab('settings')}
+        className={`sidebar-link w-full text-left flex items-center gap-3 p-3 rounded-xl transition-all ${activeTab === 'settings' ? 'bg-green-500/10 text-green-600 border-l-4 border-green-500 pl-4' : 'text-slate-600 hover:bg-slate-100/50'}`}
+      >
+        <Settings className="w-5 h-5" /> Settings
       </button>
     </nav>
     
@@ -308,6 +426,47 @@ const App = () => {
   const [realtimeChartData, setRealtimeChartData] = useState([]);
   const [analyticsRealtimeData, setAnalyticsRealtimeData] = useState([]);
 
+  // Enhanced state variables for new functionality
+  const [systemStatus, setSystemStatus] = useState('operational');
+  const [maintenanceMode, setMaintenanceMode] = useState(false);
+  const [emergencyMode, setEmergencyMode] = useState(false);
+  const [chargingProfiles, setChargingProfiles] = useState([
+    { id: 'eco', name: 'Eco Mode', description: 'Slow charging, energy efficient', rate: 10, color: 'green' },
+    { id: 'fast', name: 'Fast Charge', description: 'Rapid charging, higher cost', rate: 50, color: 'blue' },
+    { id: 'smart', name: 'Smart AI', description: 'AI-optimized based on weather/grid', rate: 'auto', color: 'purple' }
+  ]);
+  const [selectedProfile, setSelectedProfile] = useState('smart');
+  const [systemDiagnostics, setSystemDiagnostics] = useState({
+    cpu: 45, memory: 67, network: 23, storage: 34, temperature: 28
+  });
+  const [alertSettings, setAlertSettings] = useState({
+    lowBattery: true, highTemp: true, maintenance: true, gridInstability: true, weatherAlerts: true
+  });
+  const [scheduledMaintenance, setScheduledMaintenance] = useState([
+    { id: 1, battery: 'BATTERY-001', date: '2024-01-15', type: 'Routine Check', status: 'scheduled' },
+    { id: 2, battery: 'BATTERY-002', date: '2024-01-20', type: 'Deep Cycle', status: 'scheduled' }
+  ]);
+  const [performanceMetrics, setPerformanceMetrics] = useState({
+    efficiency: 94.2, uptime: 99.8, savings: 12450, co2: 2340
+  });
+  const [networkStatus, setNetworkStatus] = useState({
+    connected: true, latency: 45, devices: 12, bandwidth: 150
+  });
+  const [userPreferences, setUserPreferences] = useState({
+    theme: 'auto', notifications: true, autoBackup: true, dataRetention: 90
+  });
+  const [activeProcesses, setActiveProcesses] = useState([
+    { id: 1, name: 'IoT Data Collection', status: 'running', cpu: 12, memory: 45 },
+    { id: 2, name: 'AI Prediction Engine', status: 'running', cpu: 8, memory: 32 },
+    { id: 3, name: 'Blockchain Sync', status: 'running', cpu: 15, memory: 28 }
+  ]);
+  const [backupStatus, setBackupStatus] = useState({
+    lastBackup: '2024-01-10 14:30', status: 'success', size: '2.4GB', nextBackup: '2024-01-11 14:30'
+  });
+  const [securityStatus, setSecurityStatus] = useState({
+    firewall: 'active', encryption: 'AES-256', lastScan: '2024-01-10 12:00', threats: 0
+  });
+
   // Generate real-time data for charts
   const generateRealtimeData = () => {
     const data = [];
@@ -488,16 +647,99 @@ const App = () => {
   const handleBatteryControl = async (action, value) => {
     try {
       const API_BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000';
-      const payload = { action };
+      const payload = { action, batteryId: selectedBattery };
 
-      if (action === 'set_target_soc') {
-        payload.targetSOC = parseInt(value);
+      switch (action) {
+        case 'start_charging':
+          payload.profile = selectedProfile;
+          break;
+        case 'set_target_soc':
+          payload.targetSOC = parseInt(value);
+          break;
+        case 'set_charging_profile':
+          payload.profile = value;
+          setSelectedProfile(value);
+          break;
+        case 'maintenance_mode':
+          payload.enabled = !maintenanceMode;
+          setMaintenanceMode(!maintenanceMode);
+          break;
+        case 'emergency_shutdown':
+          if (!confirm('⚠️ EMERGENCY SHUTDOWN: This will immediately stop all charging operations. Are you sure?')) return;
+          payload.force = true;
+          setEmergencyMode(true);
+          break;
+        case 'reset_emergency':
+          setEmergencyMode(false);
+          break;
+        case 'optimize_grid':
+          payload.weatherData = weather;
+          break;
+        case 'balance_load':
+          payload.targetDistribution = 'equal';
+          break;
+        case 'schedule_maintenance':
+          payload.date = value.date;
+          payload.type = value.type;
+          break;
+        case 'run_diagnostics':
+          payload.fullScan = true;
+          break;
+        case 'update_firmware':
+          payload.version = value;
+          break;
+        case 'toggle_alert':
+          setAlertSettings(prev => ({ ...prev, [value]: !prev[value] }));
+          return; // Don't make API call for local settings
+        case 'clear_alerts':
+          setNotifications([]);
+          return;
+        case 'export_data':
+          payload.format = value || 'csv';
+          payload.dateRange = '30d';
+          break;
+        case 'system_backup':
+          payload.type = 'full';
+          break;
+        case 'toggle_theme':
+          setUserPreferences(prev => ({ ...prev, theme: prev.theme === 'dark' ? 'light' : 'dark' }));
+          return;
+        default:
+          break;
       }
 
       const response = await axios.post(`${API_BASE}/api/battery/${selectedBattery}/control`, payload);
 
       if (response.data.success) {
-        alert(`✅ ${response.data.message}`);
+        // Enhanced success feedback
+        const messages = {
+          start_charging: `✅ Charging started with ${chargingProfiles.find(p => p.id === selectedProfile)?.name} profile`,
+          stop_charging: '✅ Charging stopped successfully',
+          set_target_soc: `✅ Target SOC set to ${value}%`,
+          maintenance_mode: `✅ Maintenance mode ${maintenanceMode ? 'disabled' : 'enabled'}`,
+          emergency_shutdown: '🚨 EMERGENCY SHUTDOWN ACTIVATED',
+          reset_emergency: '✅ Emergency mode reset',
+          optimize_grid: '✅ Grid optimization initiated',
+          balance_load: '✅ Load balancing started',
+          run_diagnostics: '✅ System diagnostics started',
+          update_firmware: '✅ Firmware update initiated',
+          export_data: `✅ Data export started (${payload.format.toUpperCase()})`,
+          system_backup: '✅ System backup initiated'
+        };
+
+        alert(messages[action] || `✅ ${response.data.message}`);
+
+        // Add notification for important actions
+        if (['emergency_shutdown', 'maintenance_mode', 'update_firmware'].includes(action)) {
+          setNotifications(prev => [...prev, {
+            id: Date.now(),
+            type: action === 'emergency_shutdown' ? 'error' : 'info',
+            title: action.replace('_', ' ').toUpperCase(),
+            message: messages[action],
+            time: new Date()
+          }]);
+        }
+
         // Refresh battery data
         const batteryResponse = await axios.get(`${API_BASE}/api/battery/${selectedBattery}`);
         if (batteryResponse.data) {
@@ -508,7 +750,7 @@ const App = () => {
       }
     } catch (error) {
       console.error('Battery control error:', error);
-      alert('❌ Failed to control battery');
+      alert('❌ Failed to control battery. Check system status.');
     }
   };
 
@@ -541,52 +783,93 @@ const App = () => {
     }
   }, [account]);
 
-  // Notification system
+  // System diagnostics monitoring
   useEffect(() => {
-    const checkForAlerts = () => {
-      const newNotifications = [];
-
-      // Battery health alerts
-      if (batteryData) {
-        if (batteryData.soc < 20) {
-          newNotifications.push({
-            id: 'low-soc',
-            type: 'warning',
-            title: 'Low Battery Level',
-            message: `${selectedBattery} SOC is below 20%. Consider charging.`,
-            time: new Date()
-          });
-        }
-        if (batteryData.temperature > 40) {
-          newNotifications.push({
-            id: 'high-temp',
-            type: 'error',
-            title: 'High Temperature Alert',
-            message: `${selectedBattery} temperature is ${batteryData.temperature}°C. Cooling recommended.`,
-            time: new Date()
-          });
-        }
-      }
-
-      // Maintenance reminders
-      const lastMaintenance = localStorage.getItem(`maintenance-${selectedBattery}`);
-      if (!lastMaintenance || Date.now() - new Date(lastMaintenance).getTime() > 30 * 24 * 60 * 60 * 1000) {
-        newNotifications.push({
-          id: 'maintenance',
-          type: 'info',
-          title: 'Maintenance Due',
-          message: `${selectedBattery} is due for routine maintenance.`,
-          time: new Date()
-        });
-      }
-
-      setNotifications(newNotifications);
+    const updateDiagnostics = () => {
+      setSystemDiagnostics(prev => ({
+        cpu: Math.max(10, Math.min(95, prev.cpu + (Math.random() - 0.5) * 10)),
+        memory: Math.max(20, Math.min(90, prev.memory + (Math.random() - 0.5) * 8)),
+        network: Math.max(5, Math.min(80, prev.network + (Math.random() - 0.5) * 15)),
+        storage: Math.max(15, Math.min(85, prev.storage + (Math.random() - 0.5) * 5)),
+        temperature: Math.max(20, Math.min(50, prev.temperature + (Math.random() - 0.5) * 3))
+      }));
     };
 
-    checkForAlerts();
-    const alertInterval = setInterval(checkForAlerts, 30000); // Check every 30 seconds
-    return () => clearInterval(alertInterval);
-  }, [batteryData, selectedBattery]);
+    const interval = setInterval(updateDiagnostics, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Network status monitoring
+  useEffect(() => {
+    const updateNetworkStatus = () => {
+      setNetworkStatus(prev => ({
+        connected: Math.random() > 0.05, // 95% uptime
+        latency: Math.max(10, Math.min(200, prev.latency + (Math.random() - 0.5) * 20)),
+        devices: Math.max(8, Math.min(16, prev.devices + Math.floor((Math.random() - 0.5) * 2))),
+        bandwidth: Math.max(50, Math.min(300, prev.bandwidth + (Math.random() - 0.5) * 30))
+      }));
+    };
+
+    const interval = setInterval(updateNetworkStatus, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Performance metrics calculation
+  useEffect(() => {
+    const updatePerformance = () => {
+      setPerformanceMetrics(prev => ({
+        efficiency: Math.max(85, Math.min(98, prev.efficiency + (Math.random() - 0.5) * 0.5)),
+        uptime: Math.max(99, Math.min(99.9, prev.uptime + (Math.random() - 0.5) * 0.01)),
+        savings: Math.max(10000, Math.min(20000, prev.savings + (Math.random() - 0.5) * 200)),
+        co2: Math.max(1500, Math.min(3500, prev.co2 + (Math.random() - 0.5) * 50))
+      }));
+    };
+
+    const interval = setInterval(updatePerformance, 15000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // System health monitoring
+  useEffect(() => {
+    const checkSystemHealth = () => {
+      const issues = [];
+
+      if (systemDiagnostics.cpu > 80) issues.push('high-cpu');
+      if (systemDiagnostics.memory > 85) issues.push('high-memory');
+      if (systemDiagnostics.temperature > 40) issues.push('high-temp');
+      if (!networkStatus.connected) issues.push('network-down');
+      if (batteryData && batteryData.soc < 15) issues.push('critical-battery');
+
+      const newStatus = issues.length > 2 ? 'critical' :
+                       issues.length > 0 ? 'warning' : 'operational';
+      setSystemStatus(newStatus);
+
+      // Auto-generate alerts for system issues
+      if (issues.length > 0 && notifications.length < 5) {
+        const alerts = {
+          'high-cpu': { type: 'warning', title: 'High CPU Usage', message: 'System CPU usage is above 80%' },
+          'high-memory': { type: 'warning', title: 'High Memory Usage', message: 'System memory usage is above 85%' },
+          'high-temp': { type: 'error', title: 'High Temperature', message: 'System temperature is above 40°C' },
+          'network-down': { type: 'error', title: 'Network Down', message: 'Network connection lost' },
+          'critical-battery': { type: 'error', title: 'Critical Battery Level', message: 'Battery SOC below 15%' }
+        };
+
+        issues.forEach(issue => {
+          if (alerts[issue] && !notifications.find(n => n.id === issue)) {
+            setNotifications(prev => [...prev, {
+              id: issue,
+              ...alerts[issue],
+              time: new Date()
+            }]);
+          }
+        });
+      }
+    };
+
+    checkSystemHealth();
+    const interval = setInterval(checkSystemHealth, 10000);
+    return () => clearInterval(interval);
+  }, [systemDiagnostics, networkStatus, batteryData, notifications]);
 
   const chartData = useMemo(() => {
     if (!logs || logs.length === 0) {
@@ -1768,6 +2051,378 @@ const App = () => {
                                 </div>
                             </div>
                         ))}
+                    </div>
+                </motion.div>
+            )}
+
+            {/* Diagnostics Tab */}
+            {activeTab === 'diagnostics' && (
+                <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="space-y-8 pb-12">
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <h2 className="text-2xl font-bold flex items-center gap-3">
+                                <Activity className="w-7 h-7 text-blue-500" />
+                                System Diagnostics
+                            </h2>
+                            <p className="text-slate-600 mt-1">Real-time monitoring and health assessment</p>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <button 
+                                onClick={() => window.location.reload()} 
+                                className="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg font-medium transition-all flex items-center gap-2"
+                            >
+                                <RefreshCw className="w-4 h-4" />
+                                Refresh Diagnostics
+                            </button>
+                            <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-lg">
+                                <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                                <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">
+                                    {systemHealth?.overall || 'Good'}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* System Health Overview */}
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <div className="glass-card p-6 text-center">
+                            <h3 className="text-lg font-bold mb-2">Overall Health</h3>
+                            <div className="text-4xl font-bold text-green-500 mb-2">
+                                {systemHealth?.overall === 'Good' ? '98%' : systemHealth?.overall === 'Warning' ? '85%' : '72%'}
+                            </div>
+                            <p className="text-slate-600 capitalize">{systemHealth?.overall || 'Good'}</p>
+                        </div>
+                        <div className="glass-card p-6 text-center">
+                            <h3 className="text-lg font-bold mb-2">Network Status</h3>
+                            <div className="text-4xl font-bold text-blue-500 mb-2">
+                                {networkStatus?.latency ? `${networkStatus.latency}ms` : '12ms'}
+                            </div>
+                            <p className="text-slate-600">Response Time</p>
+                        </div>
+                        <div className="glass-card p-6 text-center">
+                            <h3 className="text-lg font-bold mb-2">Active Nodes</h3>
+                            <div className="text-4xl font-bold text-purple-500 mb-2">
+                                {networkStatus?.activeNodes || 3}
+                            </div>
+                            <p className="text-slate-600">Online Devices</p>
+                        </div>
+                        <div className="glass-card p-6 text-center">
+                            <h3 className="text-lg font-bold mb-2">Data Integrity</h3>
+                            <div className="text-4xl font-bold text-cyan-500 mb-2">99.9%</div>
+                            <p className="text-slate-600">Blockchain Verified</p>
+                        </div>
+                    </div>
+
+                    {/* Real-time Diagnostics */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div className="glass-card p-8">
+                            <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
+                                <Gauge className="w-5 h-5 text-emerald-500" />
+                                Performance Metrics
+                            </h3>
+                            <div className="space-y-4">
+                                <div>
+                                    <div className="flex justify-between items-center mb-1">
+                                        <p className="text-sm text-slate-600">CPU Usage</p>
+                                        <p className="text-sm font-bold text-slate-700">24%</p>
+                                    </div>
+                                    <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                                        <div className="h-full bg-emerald-500 w-[24%]"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className="flex justify-between items-center mb-1">
+                                        <p className="text-sm text-slate-600">Memory Usage</p>
+                                        <p className="text-sm font-bold text-slate-700">67%</p>
+                                    </div>
+                                    <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                                        <div className="h-full bg-blue-500 w-[67%]"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className="flex justify-between items-center mb-1">
+                                        <p className="text-sm text-slate-600">Network I/O</p>
+                                        <p className="text-sm font-bold text-slate-700">1.2 MB/s</p>
+                                    </div>
+                                    <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                                        <div className="h-full bg-purple-500 w-[45%]"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className="flex justify-between items-center mb-1">
+                                        <p className="text-sm text-slate-600">Storage Usage</p>
+                                        <p className="text-sm font-bold text-slate-700">78%</p>
+                                    </div>
+                                    <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
+                                        <div className="h-full bg-orange-500 w-[78%]"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="glass-card p-8">
+                            <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
+                                <Shield className="w-5 h-5 text-blue-500" />
+                                Security Status
+                            </h3>
+                            <div className="space-y-4">
+                                <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-200">
+                                    <div className="flex items-center gap-3">
+                                        <ShieldCheck className="w-5 h-5 text-green-500" />
+                                        <span className="font-medium text-green-700">Blockchain Integrity</span>
+                                    </div>
+                                    <span className="text-sm font-bold text-green-600">Verified</span>
+                                </div>
+                                <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-200">
+                                    <div className="flex items-center gap-3">
+                                        <Lock className="w-5 h-5 text-green-500" />
+                                        <span className="font-medium text-green-700">Data Encryption</span>
+                                    </div>
+                                    <span className="text-sm font-bold text-green-600">Active</span>
+                                </div>
+                                <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                                    <div className="flex items-center gap-3">
+                                        <AlertTriangle className="w-5 h-5 text-yellow-500" />
+                                        <span className="font-medium text-yellow-700">Firewall Status</span>
+                                    </div>
+                                    <span className="text-sm font-bold text-yellow-600">Warning</span>
+                                </div>
+                                <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-200">
+                                    <div className="flex items-center gap-3">
+                                        <Wifi className="w-5 h-5 text-green-500" />
+                                        <span className="font-medium text-green-700">Network Security</span>
+                                    </div>
+                                    <span className="text-sm font-bold text-green-600">Secure</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* System Logs */}
+                    <div className="glass-card p-8">
+                        <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
+                            <FileText className="w-5 h-5 text-slate-500" />
+                            Recent System Events
+                        </h3>
+                        <div className="space-y-3 max-h-64 overflow-y-auto">
+                            {[
+                                { time: '14:32:15', level: 'INFO', message: 'Battery charging cycle completed successfully', type: 'success' },
+                                { time: '14:28:42', level: 'INFO', message: 'AI prediction model updated with new weather data', type: 'info' },
+                                { time: '14:25:18', level: 'WARN', message: 'Network latency spike detected (45ms)', type: 'warning' },
+                                { time: '14:22:33', level: 'INFO', message: 'Blockchain transaction confirmed', type: 'success' },
+                                { time: '14:18:57', level: 'INFO', message: 'System health check passed', type: 'success' },
+                                { time: '14:15:22', level: 'ERROR', message: 'Temporary connection loss to node BATTERY-002', type: 'error' },
+                                { time: '14:12:08', level: 'INFO', message: 'Weather data updated from API', type: 'info' },
+                                { time: '14:08:44', level: 'INFO', message: 'Maintenance schedule updated', type: 'info' }
+                            ].map((log, i) => (
+                                <div key={i} className={`flex items-center gap-4 p-3 rounded-lg ${
+                                    log.type === 'error' ? 'bg-red-50 border border-red-200' :
+                                    log.type === 'warning' ? 'bg-yellow-50 border border-yellow-200' :
+                                    'bg-slate-50 border border-slate-200'
+                                }`}>
+                                    <span className="text-xs font-mono text-slate-500">{log.time}</span>
+                                    <span className={`px-2 py-1 text-xs font-bold rounded ${
+                                        log.level === 'ERROR' ? 'bg-red-100 text-red-700' :
+                                        log.level === 'WARN' ? 'bg-yellow-100 text-yellow-700' :
+                                        'bg-blue-100 text-blue-700'
+                                    }`}>
+                                        {log.level}
+                                    </span>
+                                    <span className="flex-1 text-sm text-slate-700">{log.message}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </motion.div>
+            )}
+
+            {/* Settings Tab */}
+            {activeTab === 'settings' && (
+                <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="space-y-8 pb-12">
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <h2 className="text-2xl font-bold flex items-center gap-3">
+                                <Settings className="w-7 h-7 text-slate-500" />
+                                System Settings
+                            </h2>
+                            <p className="text-slate-600 mt-1">Configure system preferences and maintenance schedules</p>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <button className="px-4 py-2 bg-slate-500/20 hover:bg-slate-500/30 border border-slate-500/30 text-slate-400 rounded-lg font-medium transition-all flex items-center gap-2">
+                                <Save className="w-4 h-4" />
+                                Save Changes
+                            </button>
+                            <button className="px-4 py-2 bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 text-red-400 rounded-lg font-medium transition-all flex items-center gap-2">
+                                <RotateCcw className="w-4 h-4" />
+                                Reset to Defaults
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Settings Sections */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        {/* User Preferences */}
+                        <div className="glass-card p-8">
+                            <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
+                                <User className="w-5 h-5 text-blue-500" />
+                                User Preferences
+                            </h3>
+                            <div className="space-y-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-2">Theme</label>
+                                    <select className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white">
+                                        <option value="light">Light Mode</option>
+                                        <option value="dark">Dark Mode</option>
+                                        <option value="auto">Auto (System)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-2">Language</label>
+                                    <select className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white">
+                                        <option value="en">English</option>
+                                        <option value="hi">Hindi</option>
+                                        <option value="es">Spanish</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-2">Timezone</label>
+                                    <select className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white">
+                                        <option value="IST">IST (UTC+5:30)</option>
+                                        <option value="UTC">UTC</option>
+                                        <option value="EST">EST (UTC-5)</option>
+                                    </select>
+                                </div>
+                                <div className="flex items-center justify-between">
+                                    <span className="text-sm font-medium text-slate-700">Email Notifications</span>
+                                    <label className="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" className="sr-only peer" defaultChecked />
+                                        <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Alert Configuration */}
+                        <div className="glass-card p-8">
+                            <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
+                                <Bell className="w-5 h-5 text-orange-500" />
+                                Alert Configuration
+                            </h3>
+                            <div className="space-y-6">
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-2">Battery Low Threshold (%)</label>
+                                    <input 
+                                        type="number" 
+                                        min="0" 
+                                        max="100" 
+                                        defaultValue="20" 
+                                        className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 bg-white"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-slate-700 mb-2">Temperature Alert (°C)</label>
+                                    <input 
+                                        type="number" 
+                                        min="0" 
+                                        max="100" 
+                                        defaultValue="45" 
+                                        className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 bg-white"
+                                    />
+                                </div>
+                                <div className="flex items-center justify-between">
+                                    <span className="text-sm font-medium text-slate-700">Critical Alerts Only</span>
+                                    <label className="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" className="sr-only peer" />
+                                        <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-600"></div>
+                                    </label>
+                                </div>
+                                <div className="flex items-center justify-between">
+                                    <span className="text-sm font-medium text-slate-700">Maintenance Reminders</span>
+                                    <label className="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" className="sr-only peer" defaultChecked />
+                                        <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-orange-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-orange-600"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Maintenance Scheduling */}
+                    <div className="glass-card p-8">
+                        <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
+                            <Calendar className="w-5 h-5 text-green-500" />
+                            Maintenance Scheduling
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">Battery Maintenance</label>
+                                <select className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white">
+                                    <option value="weekly">Weekly</option>
+                                    <option value="monthly">Monthly</option>
+                                    <option value="quarterly">Quarterly</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">System Health Check</label>
+                                <select className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white">
+                                    <option value="daily">Daily</option>
+                                    <option value="weekly">Weekly</option>
+                                    <option value="monthly">Monthly</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">Data Backup</label>
+                                <select className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white">
+                                    <option value="daily">Daily</option>
+                                    <option value="weekly">Weekly</option>
+                                    <option value="monthly">Monthly</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* System Configuration */}
+                    <div className="glass-card p-8">
+                        <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
+                            <Cog className="w-5 h-5 text-purple-500" />
+                            System Configuration
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">Data Retention (Days)</label>
+                                <input 
+                                    type="number" 
+                                    min="1" 
+                                    max="365" 
+                                    defaultValue="90" 
+                                    className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">API Rate Limit (requests/min)</label>
+                                <input 
+                                    type="number" 
+                                    min="1" 
+                                    max="1000" 
+                                    defaultValue="100" 
+                                    className="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white"
+                                />
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <span className="text-sm font-medium text-slate-700">Auto-save Changes</span>
+                                <label className="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" className="sr-only peer" defaultChecked />
+                                    <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                                </label>
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <span className="text-sm font-medium text-slate-700">Debug Mode</span>
+                                <label className="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" className="sr-only peer" />
+                                    <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </motion.div>
             )}
