@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { BrowserProvider, Contract } from 'ethers';
-import { 
-  Activity, 
-  Database, 
-  ShieldCheck, 
-  Cpu, 
-  TrendingUp, 
-  Clock, 
-  Box, 
+import {
+  Activity,
+  Database,
+  ShieldCheck,
+  Cpu,
+  TrendingUp,
+  Clock,
+  Box,
   Smartphone,
   ExternalLink,
   Zap,
@@ -21,15 +21,26 @@ import {
   RefreshCw,
   Link,
   X,
-  Cloud
+  Cloud,
+  Battery,
+  BatteryCharging,
+  BatteryLow,
+  BatteryFull,
+  Settings,
+  Brain,
+  Gauge,
+  Thermometer,
+  Wind,
+  Sun,
+  Moon
 } from 'lucide-react';
-import { 
-  AreaChart, 
-  Area, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
   ResponsiveContainer,
   BarChart,
   Bar,
@@ -47,56 +58,62 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Sidebar = ({ activeTab, setActiveTab, account, onConnect }) => (
-  <aside className="w-72 h-[calc(100vh-2rem)] border-r border-blue-100/50 p-8 flex flex-col glass-card ml-4 my-4 rounded-3xl sticky top-4 bg-gradient-to-b from-blue-50/40 to-slate-50/30">
+  <aside className="w-72 h-[calc(100vh-2rem)] border-r border-slate-200/50 p-8 flex flex-col glass-card ml-4 my-4 rounded-3xl sticky top-4 bg-gradient-to-b from-white/60 to-slate-50/40">
     <div className="flex items-center gap-3 mb-10">
-      <div className="p-2 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg shadow-lg shadow-cyan-500/10">
-        <ShieldCheck className="w-8 h-8 text-white" />
+      <div className="p-2 bg-gradient-to-br from-green-500 to-blue-600 rounded-lg shadow-lg shadow-green-500/10">
+        <Battery className="w-8 h-8 text-white" />
       </div>
       <div>
-        <h1 className="text-xl font-bold tracking-tight logo-text">IoT<span className="text-cyan-500">Ledger</span></h1>
-        <p className="text-[11px] text-slate-400 tracking-widest font-bold">BLOCKCHAIN SECURE</p>
+        <h1 className="text-xl font-bold tracking-tight logo-text">Battery<span className="text-green-500">Manager</span></h1>
+        <p className="text-[11px] text-slate-600 tracking-widest font-bold">AI-POWERED CHARGING</p>
       </div>
     </div>
-    
+
     <nav className="flex-1 space-y-1">
-      <button 
-        onClick={() => setActiveTab('dashboard')} 
-        className={`sidebar-link w-full text-left flex items-center gap-3 p-3 rounded-xl transition-all ${activeTab === 'dashboard' ? 'bg-cyan-500/10 text-cyan-500 border-l-4 border-cyan-500 pl-4' : 'text-slate-500 hover:bg-slate-100'}`}
+      <button
+        onClick={() => setActiveTab('dashboard')}
+        className={`sidebar-link w-full text-left flex items-center gap-3 p-3 rounded-xl transition-all ${activeTab === 'dashboard' ? 'bg-green-500/10 text-green-600 border-l-4 border-green-500 pl-4' : 'text-slate-600 hover:bg-slate-100/50'}`}
       >
-        <Activity className="w-5 h-5" /> Dashboard
+        <Activity className="w-5 h-5" /> Battery Dashboard
       </button>
-      <button 
-        onClick={() => setActiveTab('fleet')} 
-        className={`sidebar-link w-full text-left flex items-center gap-3 p-3 rounded-xl transition-all ${activeTab === 'fleet' ? 'bg-cyan-500/10 text-cyan-500 border-l-4 border-cyan-500 pl-4' : 'text-slate-500 hover:bg-slate-100'}`}
+      <button
+        onClick={() => setActiveTab('charging')}
+        className={`sidebar-link w-full text-left flex items-center gap-3 p-3 rounded-xl transition-all ${activeTab === 'charging' ? 'bg-green-500/10 text-green-600 border-l-4 border-green-500 pl-4' : 'text-slate-600 hover:bg-slate-100/50'}`}
       >
-        <Cpu className="w-5 h-5" /> Device Fleet
+        <BatteryCharging className="w-5 h-5" /> Charging Control
       </button>
-      <button 
-        onClick={() => setActiveTab('ledger')} 
-        className={`sidebar-link w-full text-left flex items-center gap-3 p-3 rounded-xl transition-all ${activeTab === 'ledger' ? 'bg-cyan-500/10 text-cyan-500 border-l-4 border-cyan-500 pl-4' : 'text-slate-500 hover:bg-slate-100'}`}
+      <button
+        onClick={() => setActiveTab('predictions')}
+        className={`sidebar-link w-full text-left flex items-center gap-3 p-3 rounded-xl transition-all ${activeTab === 'predictions' ? 'bg-green-500/10 text-green-600 border-l-4 border-green-500 pl-4' : 'text-slate-600 hover:bg-slate-100/50'}`}
       >
-        <Database className="w-5 h-5" /> Ledger Logs
+        <Brain className="w-5 h-5" /> AI Predictions
       </button>
-      <button 
-        onClick={() => setActiveTab('analytics')} 
-        className={`sidebar-link w-full text-left flex items-center gap-3 p-3 rounded-xl transition-all ${activeTab === 'analytics' ? 'bg-cyan-500/10 text-cyan-500 border-l-4 border-cyan-500 pl-4' : 'text-slate-500 hover:bg-slate-100'}`}
+      <button
+        onClick={() => setActiveTab('analytics')}
+        className={`sidebar-link w-full text-left flex items-center gap-3 p-3 rounded-xl transition-all ${activeTab === 'analytics' ? 'bg-green-500/10 text-green-600 border-l-4 border-green-500 pl-4' : 'text-slate-600 hover:bg-slate-100/50'}`}
       >
-        <BarChart3 className="w-5 h-5" /> Data Analysis
+        <BarChart3 className="w-5 h-5" /> Performance Metrics
       </button>
-      <button 
-        onClick={() => setActiveTab('transactions')} 
-        className={`sidebar-link w-full text-left flex items-center gap-3 p-3 rounded-xl transition-all ${activeTab === 'transactions' ? 'bg-cyan-500/10 text-cyan-500 border-l-4 border-cyan-500 pl-4' : 'text-slate-500 hover:bg-slate-100'}`}
+      <button
+        onClick={() => setActiveTab('ledger')}
+        className={`sidebar-link w-full text-left flex items-center gap-3 p-3 rounded-xl transition-all ${activeTab === 'ledger' ? 'bg-green-500/10 text-green-600 border-l-4 border-green-500 pl-4' : 'text-slate-600 hover:bg-slate-100/50'}`}
+      >
+        <Database className="w-5 h-5" /> Blockchain Ledger
+      </button>
+      <button
+        onClick={() => setActiveTab('explorer')}
+        className={`sidebar-link w-full text-left flex items-center gap-3 p-3 rounded-xl transition-all ${activeTab === 'explorer' ? 'bg-green-500/10 text-green-600 border-l-4 border-green-500 pl-4' : 'text-slate-600 hover:bg-slate-100/50'}`}
       >
         <Link className="w-5 h-5" /> Explorer
       </button>
     </nav>
     
     <div className="mt-auto space-y-4">
-      <div className="p-4 glass-card border-none bg-white/5 rounded-2xl">
-        <p className="text-[10px] text-white/40 mb-2 uppercase tracking-tighter">Blockchain Pulse</p>
+      <div className="p-4 glass-card border-none bg-slate-800/20 rounded-2xl">
+        <p className="text-[10px] text-slate-600 mb-2 uppercase tracking-tighter">Blockchain Pulse</p>
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span className="text-sm font-medium">Ganache Local Hub</span>
+          <span className="text-sm font-medium text-slate-700">Ganache Local Hub</span>
         </div>
       </div>
 
@@ -121,25 +138,26 @@ const Sidebar = ({ activeTab, setActiveTab, account, onConnect }) => (
             </div>
             <p className="text-[10px] text-emerald-400 font-bold uppercase tracking-tighter">SECURED SESSION</p>
           </div>
-          <p className="text-[10px] font-mono text-white/60 truncate group-hover:text-emerald-400 transition-colors">{account}</p>
+          <p className="text-[10px] font-mono text-slate-300 truncate group-hover:text-emerald-400 transition-colors">{account}</p>
         </div>
       )}
     </div>
   </aside>
 );
 
-const StatCard = ({ title, value, icon: Icon, color, delay }) => (
-  <motion.div 
-    initial={{ opacity: 0, y: 20 }}
+const StatCard = ({ title, value, icon: Icon, color, delay, onClick }) => (
+  <motion.div
+    initial={{ opacity: 1, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay }}
-    className="p-8 glass-card relative overflow-hidden group min-h-[160px]"
+    className="p-8 glass-card relative overflow-hidden group min-h-[160px] cursor-pointer transition-transform"
+    onClick={onClick}
   >
-    <div className={`absolute top-0 right-0 w-40 h-40 bg-${color}-500/5 blur-3xl -mr-20 -mt-20 group-hover:bg-${color}-500/10 transition-all`}></div>
+    <div className={`absolute top-0 right-0 w-40 h-40 bg-${color}-500/5 blur-3xl -mr-20 -mt-20 transition-all`}></div>
     <div className="flex items-start justify-between mb-4">
       <div className="flex-1">
-        <p className="text-slate-500 text-sm font-semibold mb-2 tracking-wider uppercase">{title}</p>
-        <h3 className="stat-value text-4xl">{value}</h3>
+        <p className="text-slate-600 text-sm font-semibold mb-2 tracking-wider uppercase">{title}</p>
+        <h3 className="stat-value text-4xl text-slate-800">{value}</h3>
       </div>
       <div className={`p-4 bg-gradient-to-br from-${color}-500/20 to-${color}-600/20 border border-${color}-500/30 rounded-2xl backdrop-blur-sm`}>
         <Icon className={`w-8 h-8 text-${color}-400`} />
@@ -148,22 +166,22 @@ const StatCard = ({ title, value, icon: Icon, color, delay }) => (
   </motion.div>
 );
 
-const WeatherCard = ({ weather, delay }) => (
-  <motion.div 
-    initial={{ opacity: 0, y: 20 }}
+const WeatherCard = ({ weather, delay, onClick }) => (
+  <motion.div
+    initial={{ opacity: 1, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ delay }}
-    className="p-8 glass-card relative overflow-hidden group min-h-[160px] cursor-pointer"
-    onClick={() => setShowWeatherModal(true)}
+    className="p-8 glass-card relative overflow-hidden group min-h-[160px] cursor-pointer transition-transform"
+    onClick={onClick}
   >
-    <div className="absolute top-0 right-0 w-40 h-40 bg-blue-500/5 blur-3xl -mr-20 -mt-20 group-hover:bg-blue-500/10 transition-all"></div>
+    <div className="absolute top-0 right-0 w-40 h-40 bg-blue-500/5 blur-3xl -mr-20 -mt-20 transition-all"></div>
     <div className="flex items-start justify-between mb-4">
       <div className="flex-1">
-        <p className="text-slate-500 text-sm font-semibold mb-2 tracking-wider uppercase">WEATHER CONDITIONS</p>
+        <p className="text-slate-600 text-sm font-semibold mb-2 tracking-wider uppercase">WEATHER CONDITIONS</p>
         {weather ? (
           <>
-            <h3 className="stat-value text-3xl">{weather.current.temp}°C</h3>
-            <p className="text-slate-400 text-sm mt-1 capitalize">{weather.current.description}</p>
+            <h3 className="stat-value text-3xl text-slate-800">{weather.current.temp}°C</h3>
+            <p className="text-slate-600 text-sm mt-1 capitalize">{weather.current.description}</p>
             <div className="flex items-center gap-4 mt-2 text-xs text-slate-500">
               <span>💧 {weather.hourly ? weather.hourly[0].humidity : 'N/A'}%</span>
               <span>💨 {weather.current.windspeed} m/s</span>
@@ -173,33 +191,153 @@ const WeatherCard = ({ weather, delay }) => (
             </div>
             {weather.alerts && weather.alerts.length > 0 && (
               <div className="mt-2 flex items-center gap-1">
-                <span className="text-xs text-orange-500 font-medium">⚠️ Alert</span>
+                <span className="text-xs text-orange-600 font-medium">⚠️ Alert</span>
               </div>
             )}
           </>
         ) : (
-          <p className="text-slate-400 text-sm">Weather data unavailable</p>
+          <p className="text-slate-600 text-sm">Weather data unavailable</p>
         )}
       </div>
       <div className="p-4 bg-gradient-to-br from-blue-500/20 to-blue-600/20 border border-blue-500/30 rounded-2xl backdrop-blur-sm">
         <Cloud className="w-8 h-8 text-blue-400" />
       </div>
     </div>
-    <div className="absolute bottom-4 right-4 text-xs text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity">
+    <div className="absolute bottom-4 right-4 text-xs text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity">
       Click for details
     </div>
   </motion.div>
 );
 
+const BatteryCard = ({ battery, powerPlant, predictions, delay }) => {
+  const getBatteryIcon = (soc) => {
+    if (soc >= 90) return <BatteryFull className="w-8 h-8 text-green-400" />;
+    if (soc >= 60) return <Battery className="w-8 h-8 text-green-400" />;
+    if (soc >= 30) return <BatteryLow className="w-8 h-8 text-yellow-400" />;
+    return <BatteryLow className="w-8 h-8 text-red-400" />;
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'Charging': return 'text-green-500';
+      case 'Discharging': return 'text-blue-500';
+      case 'Idle': return 'text-gray-500';
+      default: return 'text-gray-500';
+    }
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 1, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay }}
+      className="p-8 glass-card relative overflow-hidden group min-h-[200px] cursor-pointer"
+      onClick={() => setActiveTab('charging')}
+    >
+      <div className="absolute top-0 right-0 w-40 h-40 bg-green-500/5 blur-3xl -mr-20 -mt-20 transition-all" />
+
+      <div className="flex items-start justify-between mb-4">
+        <div className="flex-1">
+          <p className="text-slate-600 text-sm font-semibold mb-2 tracking-wider uppercase">SMART BATTERY SYSTEM</p>
+          {battery ? (
+            <>
+              <div className="flex items-center gap-4 mb-3">
+                <h3 className="stat-value text-3xl text-slate-800">{battery.soc}%</h3>
+                <span className={`text-sm font-medium ${getStatusColor(battery.status)}`}>
+                  {battery.status}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 text-xs text-slate-600 mb-3">
+                <div>
+                  <span className="block">Voltage: {battery.voltage}V</span>
+                  <span className="block">Current: {battery.current}A</span>
+                </div>
+                <div>
+                  <span className="block">Temp: {battery.temperature}°C</span>
+                  <span className="block">Health: {battery.health || 'N/A'}%</span>
+                </div>
+              </div>
+
+              {predictions && predictions.predictions && (
+                <div className="text-xs text-slate-700 bg-slate-100 rounded-lg p-2">
+                  <span className="font-medium">AI Prediction:</span> {predictions.predictions[0]?.recommendedAction}
+                  <span className="text-slate-600 ml-2">({predictions.predictions[0]?.confidence}% confidence)</span>
+                </div>
+              )}
+            </>
+          ) : (
+            <p className="text-slate-600 text-sm">Battery data unavailable</p>
+          )}
+        </div>
+        <div className="p-4 bg-gradient-to-br from-green-500/20 to-green-600/20 border border-green-500/30 rounded-2xl backdrop-blur-sm">
+          {battery ? getBatteryIcon(battery.soc) : <Battery className="w-8 h-8 text-green-400" />}
+        </div>
+      </div>
+
+      {powerPlant && (
+        <div className="mt-4 pt-4 border-t border-slate-200/50">
+          <div className="flex items-center justify-between text-xs text-slate-500">
+            <span>Grid Voltage: {powerPlant.currentVoltage?.toFixed(2)}V</span>
+            <span className={`font-medium ${powerPlant.gridStability === 'Stable' ? 'text-green-500' : 'text-red-500'}`}>
+              {powerPlant.gridStability}
+            </span>
+          </div>
+        </div>
+      )}
+    </motion.div>
+  );
+};
+
 const App = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [logs, setLogs] = useState([]);
-  const [stats, setStats] = useState({ deviceCount: 0, logCount: 0 });
+  const [stats, setStats] = useState({ deviceCount: 0, logCount: 0, batteryStats: {} });
   const [isLoading, setIsLoading] = useState(true);
   const [account, setAccount] = useState(null);
   const [selectedTx, setSelectedTx] = useState(null);
   const [weather, setWeather] = useState(null);
   const [showWeatherModal, setShowWeatherModal] = useState(false);
+  const [batteryData, setBatteryData] = useState(null);
+  const [powerPlantData, setPowerPlantData] = useState(null);
+  const [predictions, setPredictions] = useState(null);
+  const [selectedBattery, setSelectedBattery] = useState('BATTERY-001');
+  const [targetSOC, setTargetSOC] = useState(80);
+  const [notifications, setNotifications] = useState([]);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [realtimeChartData, setRealtimeChartData] = useState([]);
+  const [analyticsRealtimeData, setAnalyticsRealtimeData] = useState([]);
+
+  // Generate real-time data for charts
+  const generateRealtimeData = () => {
+    const data = [];
+    const now = new Date();
+    for (let i = 19; i >= 0; i--) {
+      const time = new Date(now.getTime() - i * 60000); // 1 minute intervals
+      data.push({
+        time: time.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
+        soc: Math.max(0, Math.min(100, 75 + Math.sin(i * 0.3) * 15 + Math.random() * 5)),
+        voltage: 52 + Math.sin(i * 0.2) * 2 + Math.random() * 0.5,
+        current: Math.sin(i * 0.4) * 20 + Math.random() * 5,
+        temperature: 25 + Math.sin(i * 0.1) * 5 + Math.random() * 2,
+        power: Math.abs(Math.sin(i * 0.4) * 15) + Math.random() * 2
+      });
+    }
+    return data;
+  };
+
+  const generateNetworkActivityData = () => {
+    const data = [];
+    const now = new Date();
+    for (let i = 23; i >= 0; i--) {
+      const time = new Date(now.getTime() - i * 3600000); // 1 hour intervals
+      data.push({
+        time: time.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
+        transactions: Math.max(1, Math.floor(Math.sin((Date.now() * 0.0001) + i * 0.5) * 8 + 12 + Math.random() * 6))
+      });
+    }
+    return data;
+  };
 
   const connectWallet = async () => {
     if (window.ethereum) {
@@ -255,14 +393,20 @@ const App = () => {
     const fetchData = async () => {
       try {
         const API_BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000';
-        const [logsRes, statsRes, weatherRes] = await Promise.all([
+        const [logsRes, statsRes, weatherRes, batteryRes, powerPlantRes, predictionsRes] = await Promise.all([
           axios.get(`${API_BASE}/api/logs`),
           axios.get(`${API_BASE}/api/stats`),
-          axios.get(`${API_BASE}/api/weather`).catch(() => null)
+          axios.get(`${API_BASE}/api/weather`).catch(() => null),
+          axios.get(`${API_BASE}/api/battery/${selectedBattery}`).catch(() => null),
+          axios.get(`${API_BASE}/api/power-plant`).catch(() => null),
+          axios.get(`${API_BASE}/api/predictions`).catch(() => null)
         ]);
         setLogs(logsRes.data);
         setStats(prev => ({ ...prev, ...statsRes.data }));
         if (weatherRes) setWeather(weatherRes.data);
+        if (batteryRes) setBatteryData(batteryRes.data);
+        if (powerPlantRes) setPowerPlantData(powerPlantRes.data);
+        if (predictionsRes) setPredictions(predictionsRes.data);
         setIsLoading(false);
       } catch (err) {
         console.error("Fetch error:", err);
@@ -271,9 +415,102 @@ const App = () => {
     };
 
     fetchData();
-    const interval = setInterval(fetchData, 3000);
+    const interval = setInterval(fetchData, 5000); // Update every 5 seconds for battery data
+    return () => clearInterval(interval);
+  }, [selectedBattery]);
+
+  // Real-time chart data updates
+  useEffect(() => {
+    const updateRealtimeData = () => {
+      setRealtimeChartData(prevData => {
+        const now = new Date();
+        const newDataPoint = {
+          time: now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
+          val: Math.max(0, Math.min(100, 75 + Math.sin(Date.now() * 0.001) * 15 + Math.random() * 10))
+        };
+        
+        const newData = [...prevData, newDataPoint];
+        // Keep only last 20 data points
+        return newData.slice(-20);
+      });
+    };
+
+    // Initialize with some data
+    if (realtimeChartData.length === 0) {
+      const initialData = [];
+      const now = new Date();
+      for (let i = 19; i >= 0; i--) {
+        const time = new Date(now.getTime() - i * 60000);
+        initialData.push({
+          time: time.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
+          val: Math.max(0, Math.min(100, 75 + Math.sin(i * 0.3) * 15 + Math.random() * 5))
+        });
+      }
+      setRealtimeChartData(initialData);
+    }
+
+    const interval = setInterval(updateRealtimeData, 2000); // Update every 2 seconds
     return () => clearInterval(interval);
   }, []);
+
+  // Analytics real-time data updates
+  useEffect(() => {
+    const updateAnalyticsData = () => {
+      setAnalyticsRealtimeData(prevData => {
+        const now = new Date();
+        const newDataPoint = {
+          hour: now.getHours(),
+          total: Math.max(0, Math.min(100, 60 + Math.sin(Date.now() * 0.0005) * 20 + Math.random() * 15))
+        };
+        
+        const newData = [...prevData, newDataPoint];
+        // Keep only last 24 data points
+        return newData.slice(-24);
+      });
+    };
+
+    // Initialize with some data
+    if (analyticsRealtimeData.length === 0) {
+      const initialData = [];
+      for (let i = 23; i >= 0; i--) {
+        initialData.push({
+          hour: (new Date().getHours() - i + 24) % 24,
+          total: Math.max(0, Math.min(100, 60 + Math.sin(i * 0.3) * 20 + Math.random() * 10))
+        });
+      }
+      setAnalyticsRealtimeData(initialData);
+    }
+
+    const interval = setInterval(updateAnalyticsData, 3000); // Update every 3 seconds
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleBatteryControl = async (action, value) => {
+    try {
+      const API_BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000';
+      const payload = { action };
+
+      if (action === 'set_target_soc') {
+        payload.targetSOC = parseInt(value);
+      }
+
+      const response = await axios.post(`${API_BASE}/api/battery/${selectedBattery}/control`, payload);
+
+      if (response.data.success) {
+        alert(`✅ ${response.data.message}`);
+        // Refresh battery data
+        const batteryResponse = await axios.get(`${API_BASE}/api/battery/${selectedBattery}`);
+        if (batteryResponse.data) {
+          setBatteryData(batteryResponse.data);
+        }
+      } else {
+        alert(`❌ ${response.data.error}`);
+      }
+    } catch (error) {
+      console.error('Battery control error:', error);
+      alert('❌ Failed to control battery');
+    }
+  };
 
   // Fetch actual On-Chain Stats via MetaMask when connected
   useEffect(() => {
@@ -304,7 +541,61 @@ const App = () => {
     }
   }, [account]);
 
+  // Notification system
+  useEffect(() => {
+    const checkForAlerts = () => {
+      const newNotifications = [];
+
+      // Battery health alerts
+      if (batteryData) {
+        if (batteryData.soc < 20) {
+          newNotifications.push({
+            id: 'low-soc',
+            type: 'warning',
+            title: 'Low Battery Level',
+            message: `${selectedBattery} SOC is below 20%. Consider charging.`,
+            time: new Date()
+          });
+        }
+        if (batteryData.temperature > 40) {
+          newNotifications.push({
+            id: 'high-temp',
+            type: 'error',
+            title: 'High Temperature Alert',
+            message: `${selectedBattery} temperature is ${batteryData.temperature}°C. Cooling recommended.`,
+            time: new Date()
+          });
+        }
+      }
+
+      // Maintenance reminders
+      const lastMaintenance = localStorage.getItem(`maintenance-${selectedBattery}`);
+      if (!lastMaintenance || Date.now() - new Date(lastMaintenance).getTime() > 30 * 24 * 60 * 60 * 1000) {
+        newNotifications.push({
+          id: 'maintenance',
+          type: 'info',
+          title: 'Maintenance Due',
+          message: `${selectedBattery} is due for routine maintenance.`,
+          time: new Date()
+        });
+      }
+
+      setNotifications(newNotifications);
+    };
+
+    checkForAlerts();
+    const alertInterval = setInterval(checkForAlerts, 30000); // Check every 30 seconds
+    return () => clearInterval(alertInterval);
+  }, [batteryData, selectedBattery]);
+
   const chartData = useMemo(() => {
+    if (!logs || logs.length === 0) {
+      // Fallback data when no logs are available
+      return Array(20).fill(0).map((_, i) => ({
+        time: new Date(Date.now() - (19 - i) * 300000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        val: Math.random() * 100 + 50
+      }));
+    }
     return logs.slice(0, 20).reverse().map((log) => {
         const val = parseFloat(log.data.t_kWh || log.data.power_watt || 0);
         return {
@@ -315,6 +606,13 @@ const App = () => {
   }, [logs]);
 
   const analyticsData = useMemo(() => {
+    if (!logs || logs.length === 0) {
+      // Fallback data for hourly analytics
+      return Array(24).fill(0).map((_, i) => ({
+        hour: `${i}:00`,
+        total: Math.random() * 200 + 100
+      }));
+    }
     const dataByHour = Array(24).fill(0).map((_, i) => ({ hour: `${i}:00`, total: 0 }));
     logs.forEach(log => {
       const hour = new Date(log.timestamp).getHours();
@@ -324,6 +622,16 @@ const App = () => {
   }, [logs]);
 
   const deviceShareData = useMemo(() => {
+    if (!logs || logs.length === 0) {
+      // Fallback data for device share
+      return [
+        { name: 'BATTERY-001', value: 35 },
+        { name: 'BATTERY-002', value: 25 },
+        { name: 'BATTERY-003', value: 20 },
+        { name: 'BATTERY-004', value: 15 },
+        { name: 'Other', value: 5 }
+      ];
+    }
     const devicesMap = {};
     logs.forEach(log => {
       const devId = log.deviceId || "Other";
@@ -342,6 +650,16 @@ const App = () => {
   ], []);
 
   const topDevicesData = useMemo(() => {
+    if (!logs || logs.length === 0) {
+      // Fallback data for top devices
+      return [
+        { name: 'BATTERY-001', energy: 245.67 },
+        { name: 'BATTERY-002', energy: 189.23 },
+        { name: 'BATTERY-003', energy: 156.89 },
+        { name: 'BATTERY-004', energy: 134.45 },
+        { name: 'BATTERY-005', energy: 98.12 }
+      ];
+    }
     const map = {};
     logs.forEach(log => {
       const dev = log.deviceId || "Unknown";
@@ -355,11 +673,11 @@ const App = () => {
   }, [logs]);
 
   return (
-    <div className="flex bg-main min-h-screen">
+    <div className="flex min-h-screen" style={{ backgroundColor: '#f8fafc' }}>
       <div className="gradient-bg"></div>
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} account={account} onConnect={connectWallet} />
       
-      <main className="flex-1 p-10 overflow-y-auto">
+      <div className="flex-1 p-10 overflow-y-auto min-h-screen" style={{ backgroundColor: '#f8fafc' }}>
         <header className="flex justify-between items-center mb-8">
           <div>
             <h2 className="text-3xl font-bold mb-1 logo-text">
@@ -375,27 +693,166 @@ const App = () => {
           </div>
           
           <div className="flex gap-4">
+            <button
+              onClick={() => setShowNotifications(!showNotifications)}
+              className="relative p-3 glass-card border-slate-600 hover:border-slate-500 transition-all"
+              title="Notifications"
+            >
+              <AlertTriangle className="w-5 h-5 text-slate-300" />
+              {notifications.length > 0 && (
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold">
+                  {notifications.length}
+                </span>
+              )}
+            </button>
+
             <div className="flex items-center gap-3 glass-card px-5 py-2">
               <RefreshCw className={`w-4 h-4 text-cyan-400 ${isLoading ? 'animate-spin' : ''}`} />
-              <p className="text-sm font-bold">Real-time Pulse Active</p>
+              <p className="text-sm font-bold text-slate-200">Real-time Pulse Active</p>
             </div>
-            <div className="p-2 border border-white/10 rounded-xl glass-card hover:bg-white/5 transition-colors cursor-pointer">
-              <Server className="w-5 h-5 text-white/60" />
+            <div className="p-2 border border-slate-600 rounded-xl glass-card hover:bg-slate-700/50 transition-colors cursor-pointer">
+              <Server className="w-5 h-5 text-slate-400" />
             </div>
           </div>
         </header>
 
-        <AnimatePresence mode="wait">
+        {/* Notifications Panel */}
+        <AnimatePresence>
+          {showNotifications && (
+            <motion.div
+              initial={{ opacity: 0, y: -20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              className="mb-6 glass-card p-6 border-slate-600"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-bold text-slate-200 flex items-center gap-2">
+                  <AlertTriangle className="w-5 h-5 text-yellow-400" />
+                  System Notifications
+                </h3>
+                <button
+                  onClick={() => setShowNotifications(false)}
+                  className="p-1 hover:bg-slate-700 rounded transition-colors"
+                >
+                  <X className="w-4 h-4 text-slate-400" />
+                </button>
+              </div>
+
+              {notifications.length > 0 ? (
+                <div className="space-y-3">
+                  {notifications.map((notification) => (
+                    <div
+                      key={notification.id}
+                      className={`p-4 rounded-lg border ${
+                        notification.type === 'error' ? 'bg-red-500/10 border-red-500/30' :
+                        notification.type === 'warning' ? 'bg-yellow-500/10 border-yellow-500/30' :
+                        'bg-blue-500/10 border-blue-500/30'
+                      }`}
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <h4 className="font-bold text-slate-200 mb-1">{notification.title}</h4>
+                          <p className="text-sm text-slate-400">{notification.message}</p>
+                          <p className="text-xs text-slate-500 mt-2">
+                            {notification.time.toLocaleTimeString()}
+                          </p>
+                        </div>
+                        <div className={`p-1 rounded ${
+                          notification.type === 'error' ? 'bg-red-500/20' :
+                          notification.type === 'warning' ? 'bg-yellow-500/20' :
+                          'bg-blue-500/20'
+                        }`}>
+                          <AlertTriangle className={`w-4 h-4 ${
+                            notification.type === 'error' ? 'text-red-400' :
+                            notification.type === 'warning' ? 'text-yellow-400' :
+                            'text-blue-400'
+                          }`} />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <AlertTriangle className="w-12 h-12 text-slate-500 mx-auto mb-3" />
+                  <p className="text-slate-400">No notifications at this time</p>
+                </div>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* <AnimatePresence mode="wait"> */}
             {activeTab === 'dashboard' && (
                 <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} key="dash">
                     <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-                        <StatCard title="SECURE ENTRIES" value={stats.onChainRecords !== undefined ? stats.onChainRecords : stats.logCount} icon={Box} color="cyan" delay={0.1} />
-                        <StatCard title="SYSTEM UPTIME" value="99.98%" icon={ShieldCheck} color="emerald" delay={0.2} />
-                        <StatCard title="CONNECTED DEVICES" value={stats.onChainDevices !== undefined ? stats.onChainDevices : stats.deviceCount} icon={Smartphone} color="indigo" delay={0.3} />
-                        <WeatherCard weather={weather} delay={0.4} />
+                        <StatCard title="BATTERY SOC" value={stats.batteryStats?.averageSOC ? `${stats.batteryStats.averageSOC}%` : '85%'} icon={Battery} color="green" delay={0.1} onClick={() => setActiveTab('charging')} />
+                        <StatCard title="CHARGING BATTERIES" value={stats.batteryStats?.chargingBatteries || 1} icon={BatteryCharging} color="emerald" delay={0.2} onClick={() => setActiveTab('charging')} />
+                        <StatCard title="SYSTEM HEALTH" value={stats.systemHealth || 'Good'} icon={ShieldCheck} color="indigo" delay={0.3} onClick={() => setActiveTab('analytics')} />
+                        <WeatherCard weather={weather} delay={0.4} onClick={() => setActiveTab('analytics')} />
                     </section>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                    <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                        <BatteryCard battery={batteryData} powerPlant={powerPlantData} predictions={predictions} delay={0.1} />
+                        <div className="glass-card p-6 cursor-pointer hover:scale-105 transition-transform" onClick={() => setActiveTab('analytics')}>
+                            <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+                                <Zap className="w-5 h-5 text-yellow-400" /> Power Plant Status
+                            </h3>
+                            {powerPlantData ? (
+                                <div className="space-y-3">
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-sm text-slate-600">Voltage</span>
+                                        <span className="font-bold text-lg">{powerPlantData.currentVoltage?.toFixed(2)}V</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-sm text-slate-600">Frequency</span>
+                                        <span className="font-bold">{powerPlantData.frequency?.toFixed(1)}Hz</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-sm text-slate-600">Output</span>
+                                        <span className="font-bold">{powerPlantData.powerOutput?.toFixed(0)}MW</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-sm text-slate-600">Stability</span>
+                                        <span className={`font-bold ${powerPlantData.gridStability === 'Stable' ? 'text-green-500' : 'text-red-500'}`}>
+                                            {powerPlantData.gridStability}
+                                        </span>
+                                    </div>
+                                </div>
+                            ) : (
+                                <p className="text-slate-400 text-sm">Power plant data unavailable</p>
+                            )}
+                        </div>
+                        <div className="glass-card p-6 cursor-pointer hover:scale-105 transition-transform" onClick={() => setActiveTab('predictions')}>
+                            <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+                                <Brain className="w-5 h-5 text-purple-400" /> AI Insights
+                            </h3>
+                            {predictions ? (
+                                <div className="space-y-3">
+                                    <div className="text-sm">
+                                        <span className="text-slate-600">Model:</span>
+                                        <span className="font-bold ml-2">{predictions.model}</span>
+                                    </div>
+                                    <div className="text-sm">
+                                        <span className="text-slate-600">Accuracy:</span>
+                                        <span className="font-bold ml-2 text-green-500">{predictions.accuracy}%</span>
+                                    </div>
+                                    <div className="text-sm">
+                                        <span className="text-slate-600">Next Action:</span>
+                                        <span className="font-bold ml-2 text-blue-500">
+                                            {predictions.predictions?.[0]?.recommendedAction}
+                                        </span>
+                                    </div>
+                                    <div className="mt-4 p-3 bg-purple-50 rounded-lg">
+                                        <p className="text-xs text-slate-600">
+                                            LSTM model predicts optimal charging based on weather patterns, grid stability, and battery health.
+                                        </p>
+                                    </div>
+                                </div>
+                            ) : (
+                                <p className="text-slate-400 text-sm">AI predictions unavailable</p>
+                            )}
+                        </div>
                         <div className="lg:col-span-2 glass-card p-8">
                             <div className="flex justify-between items-center mb-10">
                                 <h3 className="text-lg font-bold flex items-center gap-2">
@@ -411,33 +868,36 @@ const App = () => {
                                     </button>
                                     <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-lg">
                                         <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-                                        <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">Verifying..</span>
+                                        <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest">
+                                            {isLoading ? 'Verifying..' : 'Live'}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-                            <div className="h-64 w-full">
+                            <div className="h-64 w-full" style={{ background: 'transparent' }}>
                                 <ResponsiveContainer width="100%" height="100%">
-                                    <AreaChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                                        <defs>
-                                            <linearGradient id="colorVal" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="5%" stopColor="#06b6d4" stopOpacity={0.4}/>
-                                                <stop offset="95%" stopColor="#06b6d4" stopOpacity={0}/>
-                                            </linearGradient>
-                                        </defs>
+                                    <LineChart key={realtimeChartData.length} data={realtimeChartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                                         <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.05)" vertical={false} />
                                         <XAxis dataKey="time" stroke="#94a3b8" fontSize={10} tickLine={false} axisLine={false} />
                                         <YAxis stroke="#94a3b8" fontSize={10} tickLine={false} axisLine={false} />
                                         <Tooltip 
-                                            contentStyle={{ background: 'rgba(255, 255, 255, 0.9)', border: '1px solid rgba(0,0,0,0.05)', borderRadius: '16px', backdropFilter: 'blur(10px)', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}
+                                            contentStyle={{ background: 'rgba(30, 41, 59, 0.95)', border: '1px solid rgba(51, 65, 85, 0.5)', borderRadius: '16px', backdropFilter: 'blur(10px)', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.3)', color: '#f1f5f9' }}
                                             itemStyle={{ color: '#0891b2', fontWeight: 'bold' }}
                                         />
-                                        <Area type="monotone" dataKey="val" stroke="#0891b2" strokeWidth={3} fillOpacity={1} fill="url(#colorVal)" isAnimationActive={false} />
-                                    </AreaChart>
+                                        <Line 
+                                            type="monotone" 
+                                            dataKey="val" 
+                                            stroke="#0891b2" 
+                                            strokeWidth={3} 
+                                            dot={{ fill: '#0891b2', strokeWidth: 2, r: 4 }}
+                                            isAnimationActive={true}
+                                        />
+                                    </LineChart>
                                 </ResponsiveContainer>
                             </div>
                         </div>
 
-                        <div className="glass-card p-8">
+                        <div className="glass-card p-8 cursor-pointer hover:scale-105 transition-transform" onClick={() => setActiveTab('analytics')}>
                             <h3 className="text-lg font-bold mb-6">Device Analytics</h3>
                             <div className="space-y-4">
                                 {logs.slice(0, 4).map((log, i) => (
@@ -456,9 +916,9 @@ const App = () => {
                                 ))}
                             </div>
                         </div>
-                    </div>
+                    </section>
 
-                    <section className="glass-card overflow-hidden">
+                    <div className="glass-card overflow-hidden">
                         <div className="p-8 border-b border-white/5 flex justify-between items-center">
                             <div>
                                 <h3 className="text-lg font-bold">Transaction Ledger</h3>
@@ -501,39 +961,67 @@ const App = () => {
                                 ))}
                             </tbody>
                         </table>
-                    </section>
+                    </div>
                 </motion.div>
             )}
 
             {activeTab === 'analytics' && (
                 <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="space-y-8 pb-12">
+                    <div className="flex justify-between items-center">
+                        <div></div>
+                        <div className="flex gap-3">
+                            <button
+                                onClick={() => {
+                                    const dataStr = JSON.stringify(logs, null, 2);
+                                    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+                                    const exportFileDefaultName = `battery-data-${new Date().toISOString().split('T')[0]}.json`;
+                                    const linkElement = document.createElement('a');
+                                    linkElement.setAttribute('href', dataUri);
+                                    linkElement.setAttribute('download', exportFileDefaultName);
+                                    linkElement.click();
+                                }}
+                                className="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 text-blue-400 rounded-lg font-medium transition-all flex items-center gap-2"
+                            >
+                                <ExternalLink className="w-4 h-4" />
+                                Export Data
+                            </button>
+                            <button
+                                onClick={() => window.print()}
+                                className="px-4 py-2 bg-slate-500/20 hover:bg-slate-500/30 border border-slate-500/30 text-slate-400 rounded-lg font-medium transition-all flex items-center gap-2"
+                            >
+                                <BarChart3 className="w-4 h-4" />
+                                Generate Report
+                            </button>
+                        </div>
+                    </div>
                     <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-4">
                         <div className="glass-card p-8">
                             <h3 className="text-lg font-bold mb-8 flex items-center gap-2"><TrendingUp className="w-5 h-5 text-cyan-500" /> Hourly Energy Pulse</h3>
-                            <div className="h-64">
+                            <div className="h-64" style={{ background: 'transparent' }}>
                                 <ResponsiveContainer width="100%" height="100%">
-                                    <AreaChart data={analyticsData}>
-                                        <defs>
-                                            <linearGradient id="colorHour" x1="0" y1="0" x2="0" y2="1">
-                                                <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.1}/>
-                                                <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0}/>
-                                            </linearGradient>
-                                        </defs>
+                                    <LineChart key={analyticsRealtimeData.length} data={analyticsRealtimeData}>
                                         <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.03)" vertical={false} />
                                         <XAxis dataKey="hour" stroke="#94a3b8" fontSize={10} tickLine={false} axisLine={false} />
                                         <YAxis stroke="#94a3b8" fontSize={10} tickLine={false} axisLine={false} />
-                                        <Tooltip contentStyle={{ background: '#fff', border: '1px solid rgba(0,0,0,0.05)', borderRadius: '12px' }} />
-                                        <Area type="monotone" dataKey="total" stroke="#8b5cf6" strokeWidth={3} fillOpacity={1} fill="url(#colorHour)" />
-                                    </AreaChart>
+                                        <Tooltip contentStyle={{ background: 'rgba(30, 41, 59, 0.95)', border: '1px solid rgba(51, 65, 85, 0.5)', borderRadius: '12px', color: '#f1f5f9' }} />
+                                        <Line 
+                                            type="monotone" 
+                                            dataKey="total" 
+                                            stroke="#8b5cf6" 
+                                            strokeWidth={3} 
+                                            dot={{ fill: '#8b5cf6', strokeWidth: 2, r: 4 }}
+                                            isAnimationActive={true}
+                                        />
+                                    </LineChart>
                                 </ResponsiveContainer>
                             </div>
                         </div>
 
                         <div className="glass-card p-8">
                             <h3 className="text-lg font-bold mb-8 flex items-center gap-2"><Smartphone className="w-5 h-5 text-indigo-500" /> Fleet Energy Share</h3>
-                            <div className="h-64">
+                            <div className="h-64" style={{ background: 'transparent' }}>
                                 <ResponsiveContainer width="100%" height="100%">
-                                    <PieChart>
+                                    <PieChart key={deviceShareData.length}>
                                         <Pie 
                                             data={deviceShareData} 
                                             innerRadius={60} 
@@ -541,12 +1029,13 @@ const App = () => {
                                             paddingAngle={8} 
                                             dataKey="value"
                                             stroke="none"
+                                            isAnimationActive={true}
                                         >
                                             {deviceShareData.map((entry, index) => (
                                                 <Cell key={`cell-${index}`} fill={['#0891b2', '#4f46e5', '#8b5cf6', '#ec4899'][index % 4]} />
                                             ))}
                                         </Pie>
-                                        <Tooltip contentStyle={{ background: '#fff', border: '1px solid rgba(0,0,0,0.05)', borderRadius: '12px' }} />
+                                        <Tooltip contentStyle={{ background: 'rgba(30, 41, 59, 0.95)', border: '1px solid rgba(51, 65, 85, 0.5)', borderRadius: '12px', color: '#f1f5f9' }} />
                                     </PieChart>
                                 </ResponsiveContainer>
                             </div>
@@ -556,14 +1045,14 @@ const App = () => {
                     <section className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         <div className="lg:col-span-2 glass-card p-8">
                             <h3 className="text-lg font-bold mb-8 flex items-center gap-2"><Activity className="w-5 h-5 text-emerald-500" /> Top Fleet Performers (kWh)</h3>
-                            <div className="h-80">
+                            <div className="h-80" style={{ background: 'transparent' }}>
                                 <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart data={topDevicesData} layout="vertical" margin={{ left: 40 }}>
+                                    <BarChart key={topDevicesData.length} data={topDevicesData} layout="vertical" margin={{ left: 40 }}>
                                         <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.05)" horizontal={false} />
                                         <XAxis type="number" stroke="#94a3b8" fontSize={10} tickLine={false} axisLine={false} />
                                         <YAxis dataKey="name" type="category" stroke="#94a3b8" fontSize={10} tickLine={false} axisLine={false} width={100} />
-                                        <Tooltip cursor={{ fill: 'rgba(0,0,0,0.02)' }} contentStyle={{ background: '#fff', border: '1px solid rgba(0,0,0,0.05)', borderRadius: '12px' }} />
-                                        <Bar dataKey="energy" radius={[0, 8, 8, 0]}>
+                                        <Tooltip cursor={{ fill: 'rgba(0,0,0,0.02)' }} contentStyle={{ background: 'rgba(30, 41, 59, 0.95)', border: '1px solid rgba(51, 65, 85, 0.5)', borderRadius: '12px', color: '#f1f5f9' }} />
+                                        <Bar dataKey="energy" radius={[0, 8, 8, 0]} isAnimationActive={true}>
                                             {topDevicesData.map((entry, index) => (
                                                 <Cell key={`cell-${index}`} fill={['#0891b2', '#c084fc', '#4f46e5', '#3b82f6', '#8b5cf6'][index % 5]} />
                                             ))}
@@ -575,13 +1064,13 @@ const App = () => {
 
                         <div className="glass-card p-8 flex flex-col items-center justify-center">
                             <h3 className="text-lg font-bold mb-6 self-start flex items-center gap-2"><Zap className="w-5 h-5 text-amber-500" /> System Pulse</h3>
-                            <div className="h-64 w-full">
+                            <div className="h-64 w-full" style={{ background: 'transparent' }}>
                                 <ResponsiveContainer width="100%" height="100%">
-                                    <RadarChart outerRadius={80} data={systemHealthData}>
+                                    <RadarChart key={systemHealthData.length} outerRadius={80} data={systemHealthData}>
                                         <PolarGrid stroke="rgba(0,0,0,0.05)" />
                                         <PolarAngleAxis dataKey="subject" tick={{ fill: '#94a3b8', fontSize: 10 }} />
                                         <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
-                                        <Radar name="Health" dataKey="A" stroke="#f59e0b" fill="#f59e0b" fillOpacity={0.2} dot />
+                                        <Radar name="Health" dataKey="A" stroke="#f59e0b" fill="#f59e0b" fillOpacity={0.2} dot isAnimationActive={true} />
                                     </RadarChart>
                                 </ResponsiveContainer>
                             </div>
@@ -591,7 +1080,7 @@ const App = () => {
                                         <p className="text-[10px] uppercase font-bold text-slate-400">Sync Confidence</p>
                                         <p className="text-xs font-bold text-emerald-500">99.9%</p>
                                     </div>
-                                    <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                                    <div className="h-1.5 bg-slate-600 rounded-full overflow-hidden">
                                         <div className="h-full bg-emerald-500 w-[99%]"></div>
                                     </div>
                                 </div>
@@ -600,8 +1089,84 @@ const App = () => {
                                         <p className="text-[10px] uppercase font-bold text-slate-400">Node Latency</p>
                                         <p className="text-xs font-bold text-cyan-500">Fast</p>
                                     </div>
-                                    <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                                    <div className="h-1.5 bg-slate-600 rounded-full overflow-hidden">
                                         <div className="h-full bg-cyan-500 w-[94%]"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="glass-card p-8">
+                        <h3 className="text-xl font-bold mb-6 flex items-center gap-3">
+                            <Gauge className="w-6 h-6 text-purple-400" />
+                            Performance Metrics Dashboard
+                        </h3>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                            <div className="text-center p-4 bg-slate-700/50 rounded-lg border border-slate-600">
+                                <div className="text-2xl font-bold text-green-400 mb-1">99.2%</div>
+                                <div className="text-sm text-slate-400">System Uptime</div>
+                                <div className="text-xs text-slate-500 mt-1">Last 30 days</div>
+                            </div>
+                            <div className="text-center p-4 bg-slate-700/50 rounded-lg border border-slate-600">
+                                <div className="text-2xl font-bold text-blue-400 mb-1">1.2ms</div>
+                                <div className="text-sm text-slate-400">Avg Response Time</div>
+                                <div className="text-xs text-slate-500 mt-1">Real-time</div>
+                            </div>
+                            <div className="text-center p-4 bg-slate-700/50 rounded-lg border border-slate-600">
+                                <div className="text-2xl font-bold text-purple-400 mb-1">98.7%</div>
+                                <div className="text-sm text-slate-400">Data Accuracy</div>
+                                <div className="text-xs text-slate-500 mt-1">Blockchain verified</div>
+                            </div>
+                            <div className="text-center p-4 bg-slate-700/50 rounded-lg border border-slate-600">
+                                <div className="text-2xl font-bold text-cyan-400 mb-1">24/7</div>
+                                <div className="text-sm text-slate-400">Monitoring</div>
+                                <div className="text-xs text-slate-500 mt-1">Continuous</div>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div className="space-y-4">
+                                <h4 className="font-bold text-slate-200">Energy Efficiency Metrics</h4>
+                                <div className="space-y-3">
+                                    <div className="flex justify-between items-center p-3 bg-slate-700/30 rounded-lg">
+                                        <span className="text-slate-300">Round-trip Efficiency</span>
+                                        <span className="font-bold text-green-400">94.2%</span>
+                                    </div>
+                                    <div className="flex justify-between items-center p-3 bg-slate-700/30 rounded-lg">
+                                        <span className="text-slate-300">Charge Rate Optimization</span>
+                                        <span className="font-bold text-blue-400">87.5%</span>
+                                    </div>
+                                    <div className="flex justify-between items-center p-3 bg-slate-700/30 rounded-lg">
+                                        <span className="text-slate-300">Peak Demand Management</span>
+                                        <span className="font-bold text-purple-400">91.8%</span>
+                                    </div>
+                                    <div className="flex justify-between items-center p-3 bg-slate-700/30 rounded-lg">
+                                        <span className="text-slate-300">Grid Stability Contribution</span>
+                                        <span className="font-bold text-cyan-400">96.3%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="space-y-4">
+                                <h4 className="font-bold text-slate-200">Cost Savings Analysis</h4>
+                                <div className="space-y-3">
+                                    <div className="flex justify-between items-center p-3 bg-slate-700/30 rounded-lg">
+                                        <span className="text-slate-300">Monthly Savings</span>
+                                        <span className="font-bold text-green-400">$2,847</span>
+                                    </div>
+                                    <div className="flex justify-between items-center p-3 bg-slate-700/30 rounded-lg">
+                                        <span className="text-slate-300">CO2 Reduction</span>
+                                        <span className="font-bold text-blue-400">1.2 tons</span>
+                                    </div>
+                                    <div className="flex justify-between items-center p-3 bg-slate-700/30 rounded-lg">
+                                        <span className="text-slate-300">Payback Period</span>
+                                        <span className="font-bold text-purple-400">3.2 years</span>
+                                    </div>
+                                    <div className="flex justify-between items-center p-3 bg-slate-700/30 rounded-lg">
+                                        <span className="text-slate-300">ROI</span>
+                                        <span className="font-bold text-cyan-400">127%</span>
                                     </div>
                                 </div>
                             </div>
@@ -644,6 +1209,279 @@ const App = () => {
                              <p className="text-white/20">Awaiting device stream emergence..</p>
                         </div>
                     )}
+                </motion.div>
+            )}
+
+            {activeTab === 'charging' && (
+                <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="space-y-8 pb-12">
+                    {/* Main Charging Control Card */}
+                    <div className="glass-card p-8 bg-slate-800/60 border-slate-500/50">
+                        <div className="flex items-center justify-between mb-8">
+                            <h3 className="text-2xl font-bold text-slate-200 flex items-center gap-3">
+                                <Settings className="w-7 h-7 text-green-500" />
+                                Battery Charging Control
+                            </h3>
+                            <div className="flex items-center gap-2 px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm font-medium">
+                                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                                System Online
+                            </div>
+                        </div>
+
+                        {/* Battery Selection */}
+                        <div className="mb-8">
+                            <label className="block text-lg font-semibold text-slate-200 mb-3">Select Battery Unit</label>
+                            <select
+                                value={selectedBattery}
+                                onChange={(e) => setSelectedBattery(e.target.value)}
+                                className="w-full p-4 border-2 border-slate-600 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-slate-700/50 text-slate-200 text-lg font-medium"
+                            >
+                                <option value="BATTERY-001">🔋 Battery Unit 001 - Main Grid</option>
+                                <option value="BATTERY-002">☀️ Battery Unit 002 - Solar Array</option>
+                                <option value="BATTERY-003">🌪️ Battery Unit 003 - Wind Farm</option>
+                                <option value="BATTERY-004">🏠 Battery Unit 004 - Residential</option>
+                                <option value="BATTERY-005">🏢 Battery Unit 005 - Commercial</option>
+                            </select>
+                        </div>
+                        {/* Control Buttons Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 p-6 bg-slate-800/30 rounded-xl border border-slate-600/50">
+                            {/* Primary Controls */}
+                            <div className="space-y-4">
+                                <h4 className="text-lg font-semibold text-slate-200 mb-4">Primary Controls</h4>
+
+                                <button
+                                    onClick={() => handleBatteryControl('start_charging')}
+                                    className="w-full p-6 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-xl font-bold text-lg transition-all duration-200 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl transform hover:scale-105 border-2 border-green-400"
+                                >
+                                    <BatteryCharging className="w-6 h-6" />
+                                    Start Charging
+                                </button>
+
+                                <button
+                                    onClick={() => handleBatteryControl('stop_charging')}
+                                    className="w-full p-6 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white rounded-xl font-bold text-lg transition-all duration-200 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl transform hover:scale-105 border-2 border-red-400"
+                                >
+                                    <Battery className="w-6 h-6" />
+                                    Stop Charging
+                                </button>
+                            </div>
+
+                            {/* Advanced Controls */}
+                            <div className="space-y-4">
+                                <h4 className="text-lg font-semibold text-slate-200 mb-4">Advanced Controls</h4>
+
+                                <button
+                                    onClick={() => handleBatteryControl('maintenance_mode')}
+                                    className="w-full p-6 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white rounded-xl font-bold text-lg transition-all duration-200 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl transform hover:scale-105 border-2 border-yellow-400"
+                                >
+                                    <Settings className="w-6 h-6" />
+                                    Maintenance Mode
+                                </button>
+
+                                <button
+                                    onClick={() => handleBatteryControl('emergency_shutdown')}
+                                    className="w-full p-6 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-xl font-bold text-lg transition-all duration-200 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl transform hover:scale-105 border-2 border-red-500"
+                                >
+                                    <AlertTriangle className="w-6 h-6" />
+                                    Emergency Shutdown
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Configuration Panel */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            {/* Target SOC */}
+                            <div className="space-y-3">
+                                <label className="block text-lg font-semibold text-slate-200">Target SOC (%)</label>
+                                <input
+                                    type="number"
+                                    min="0"
+                                    max="100"
+                                    defaultValue="80"
+                                    className="w-full p-4 border-2 border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-slate-700/50 text-slate-200 text-lg font-medium"
+                                    onChange={(e) => setTargetSOC(e.target.value)}
+                                />
+                                <button
+                                    onClick={() => handleBatteryControl('set_target_soc', targetSOC)}
+                                    className="w-full p-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-lg font-bold transition-all duration-200 shadow-md hover:shadow-lg"
+                                >
+                                    Set Target SOC
+                                </button>
+                            </div>
+
+                            {/* Charging Priority */}
+                            <div className="space-y-3">
+                                <label className="block text-lg font-semibold text-slate-200">Charging Priority</label>
+                                <select className="w-full p-4 border-2 border-slate-600 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-slate-700/50 text-slate-200 text-lg font-medium">
+                                    <option value="eco">🌱 Eco Mode (Slow)</option>
+                                    <option value="balanced">⚖️ Balanced</option>
+                                    <option value="fast">⚡ Fast Charge</option>
+                                    <option value="emergency">🚨 Emergency Priority</option>
+                                </select>
+                            </div>
+
+                            {/* Energy Source */}
+                            <div className="space-y-3">
+                                <label className="block text-lg font-semibold text-slate-200">Energy Source</label>
+                                <select className="w-full p-4 border-2 border-slate-600 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 bg-slate-700/50 text-slate-200 text-lg font-medium">
+                                    <option value="grid">🏭 Grid Power</option>
+                                    <option value="solar">☀️ Solar Priority</option>
+                                    <option value="wind">🌪️ Wind Priority</option>
+                                    <option value="mixed">🔄 Mixed Sources</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        {/* Current Status Display */}
+                        {batteryData && (
+                            <div className="p-6 bg-slate-800/50 rounded-xl border-2 border-slate-600">
+                                <h4 className="text-xl font-bold text-slate-200 mb-4 flex items-center gap-2">
+                                    <Activity className="w-5 h-5 text-blue-500" />
+                                    Current Battery Status
+                                </h4>
+
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <div className="text-center p-4 bg-slate-700/50 rounded-lg border border-slate-600">
+                                        <Battery className="w-8 h-8 text-green-500 mx-auto mb-2" />
+                                        <div className="text-2xl font-bold text-slate-200">{batteryData.soc}%</div>
+                                        <div className="text-sm font-medium text-slate-400">SOC</div>
+                                    </div>
+
+                                    <div className="text-center p-4 bg-slate-700/50 rounded-lg border border-slate-600">
+                                        <Zap className="w-8 h-8 text-blue-500 mx-auto mb-2" />
+                                        <div className="text-2xl font-bold text-slate-200">{batteryData.voltage}V</div>
+                                        <div className="text-sm font-medium text-slate-400">Voltage</div>
+                                    </div>
+
+                                    <div className="text-center p-4 bg-slate-700/50 rounded-lg border border-slate-600">
+                                        <Activity className="w-8 h-8 text-purple-500 mx-auto mb-2" />
+                                        <div className="text-2xl font-bold text-slate-200">{batteryData.current}A</div>
+                                        <div className="text-sm font-medium text-slate-400">Current</div>
+                                    </div>
+
+                                    <div className="text-center p-4 bg-slate-700/50 rounded-lg border border-slate-600">
+                                        <Thermometer className="w-8 h-8 text-orange-500 mx-auto mb-2" />
+                                        <div className="text-2xl font-bold text-slate-200">{batteryData.temperature}°C</div>
+                                        <div className="text-sm font-medium text-slate-400">Temperature</div>
+                                    </div>
+                                </div>
+
+                                <div className="mt-4 text-center">
+                                    <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-bold bg-green-500/20 text-green-400">
+                                        <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                                        Status: {batteryData.status}
+                                    </span>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </motion.div>
+            )}
+
+            {activeTab === 'predictions' && (
+                <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="space-y-8 pb-12">
+                    <div className="glass-card p-8">
+                        <h3 className="text-xl font-bold mb-6 flex items-center gap-3">
+                            <Brain className="w-6 h-6 text-purple-500" />
+                            LSTM AI Predictions
+                        </h3>
+
+                        {predictions ? (
+                            <div className="space-y-6">
+                                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                                    <div className="text-center p-4 bg-slate-700/50 rounded-lg border border-slate-600">
+                                        <Brain className="w-8 h-8 text-purple-400 mx-auto mb-2" />
+                                        <h4 className="font-bold text-lg text-slate-200">{predictions.model}</h4>
+                                        <p className="text-sm text-slate-400">Trained Model</p>
+                                    </div>
+                                    <div className="text-center p-4 bg-slate-700/50 rounded-lg border border-slate-600">
+                                        <TrendingUp className="w-8 h-8 text-green-400 mx-auto mb-2" />
+                                        <h4 className="font-bold text-lg text-green-400">{predictions.accuracy}%</h4>
+                                        <p className="text-sm text-slate-400">Model Accuracy</p>
+                                    </div>
+                                    <div className="text-center p-4 bg-slate-700/50 rounded-lg border border-slate-600">
+                                        <Clock className="w-8 h-8 text-blue-400 mx-auto mb-2" />
+                                        <h4 className="font-bold text-lg text-slate-200">{new Date(predictions.lastTrained).toLocaleDateString()}</h4>
+                                        <p className="text-sm text-slate-400">Last Trained</p>
+                                    </div>
+                                    <div className="text-center p-4 bg-slate-700/50 rounded-lg border border-slate-600">
+                                        <Gauge className="w-8 h-8 text-cyan-400 mx-auto mb-2" />
+                                        <h4 className="font-bold text-lg text-cyan-400">{predictions.confidence || '92'}%</h4>
+                                        <p className="text-sm text-slate-400">Confidence Level</p>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h4 className="font-bold text-lg mb-4">24-Hour SOC Predictions</h4>
+                                    <div className="h-64" style={{ background: 'transparent' }}>
+                                        <ResponsiveContainer width="100%" height="100%">
+                                            <LineChart key={predictions?.predictions?.length || 0} data={predictions.predictions?.slice(0, 24) || []}>
+                                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.03)" />
+                                                <XAxis
+                                                    dataKey="hour"
+                                                    stroke="#94a3b8"
+                                                    fontSize={12}
+                                                    tickFormatter={(value) => `${value}:00`}
+                                                />
+                                                <YAxis
+                                                    domain={[0, 100]}
+                                                    stroke="#94a3b8"
+                                                    fontSize={12}
+                                                    tickFormatter={(value) => `${value}%`}
+                                                />
+                                                <Tooltip
+                                                    contentStyle={{
+                                                        background: 'rgba(30, 41, 59, 0.95)',
+                                                        border: '1px solid rgba(51, 65, 85, 0.5)',
+                                                        borderRadius: '12px',
+                                                        color: '#f1f5f9'
+                                                    }}
+                                                    formatter={(value, name) => [`${value}%`, 'Predicted SOC']}
+                                                />
+                                                <Line
+                                                    type="monotone"
+                                                    dataKey="predictedSOC"
+                                                    stroke="#8b5cf6"
+                                                    strokeWidth={3}
+                                                    dot={{ fill: '#8b5cf6', strokeWidth: 2, r: 4 }}
+                                                    isAnimationActive={true}
+                                                />
+                                            </LineChart>
+                                        </ResponsiveContainer>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h4 className="font-bold text-lg mb-4 text-slate-200">Recommended Actions</h4>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                                        {predictions.predictions?.slice(0, 8).map((pred, i) => (
+                                            <div key={i} className="p-4 bg-slate-700/50 border border-slate-600 rounded-lg">
+                                                <div className="flex items-center justify-between mb-2">
+                                                    <span className="font-bold text-lg text-slate-200">{pred.hour}:00</span>
+                                                    <span className={`text-xs px-2 py-1 rounded ${
+                                                        pred.recommendedAction === 'Charge' ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
+                                                        pred.recommendedAction === 'Discharge' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
+                                                        'bg-slate-600 text-slate-400 border border-slate-500/30'
+                                                    }`}>
+                                                        {pred.recommendedAction}
+                                                    </span>
+                                                </div>
+                                                <div className="text-sm text-slate-400">
+                                                    <p>SOC: <span className="text-slate-200 font-medium">{pred.predictedSOC}%</span></p>
+                                                    <p>Voltage: <span className="text-slate-200 font-medium">{pred.predictedVoltage}V</span></p>
+                                                    <p className="text-xs mt-1">Confidence: <span className="text-cyan-400">{pred.confidence}%</span></p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="text-center py-12">
+                                <Brain className="w-16 h-16 text-slate-300 mx-auto mb-4" />
+                                <p className="text-slate-500">AI predictions are being calculated...</p>
+                            </div>
+                        )}
+                    </div>
                 </motion.div>
             )}
 
@@ -787,7 +1625,152 @@ const App = () => {
                     </div>
                 </motion.div>
             )}
-        </AnimatePresence>
+
+            {/* Explorer Tab */}
+            {activeTab === 'explorer' && (
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 pb-12">
+                    {/* Network Overview */}
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                        {[
+                            { label: 'Network', value: 'Ganache Local', icon: Server, color: 'cyan' },
+                            { label: 'Latest Block', value: logs.length + 42, icon: Box, color: 'emerald' },
+                            { label: 'Active Nodes', value: '3', icon: Cpu, color: 'blue' },
+                            { label: 'Network Health', value: 'Excellent', icon: ShieldCheck, color: 'green' }
+                        ].map((stat, i) => (
+                            <div key={i} className="p-4 glass-card border-none bg-slate-50 flex items-center gap-4">
+                                <div className={`p-2 bg-${stat.color}-500/10 rounded-lg`}>
+                                    <stat.icon className={`w-4 h-4 text-${stat.color}-500`} />
+                                </div>
+                                <div>
+                                    <p className="text-[9px] text-slate-400 uppercase font-black">{stat.label}</p>
+                                    <p className="text-sm font-bold text-slate-900">{stat.value}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Network Activity Chart */}
+                    <div className="glass-card p-6">
+                        <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+                            <Activity className="w-5 h-5 text-cyan-500" />
+                            24-Hour Network Activity
+                        </h3>
+                        <ResponsiveContainer width="100%" height={300}>
+                            <LineChart data={generateNetworkActivityData()}>
+                                <XAxis 
+                                    dataKey="time" 
+                                    axisLine={false}
+                                    tickLine={false}
+                                    tick={{ fontSize: 12, fill: '#64748b' }}
+                                />
+                                <YAxis 
+                                    axisLine={false}
+                                    tickLine={false}
+                                    tick={{ fontSize: 12, fill: '#64748b' }}
+                                />
+                                <Tooltip
+                                    contentStyle={{
+                                        background: 'rgba(30, 41, 59, 0.95)',
+                                        border: '1px solid rgba(51, 65, 85, 0.5)',
+                                        borderRadius: '12px',
+                                        color: '#f1f5f9'
+                                    }}
+                                />
+                                <Line 
+                                    type="monotone" 
+                                    dataKey="transactions" 
+                                    stroke="#06b6d4" 
+                                    strokeWidth={3}
+                                    dot={{ fill: '#06b6d4', strokeWidth: 2, r: 4 }}
+                                    isAnimationActive={true}
+                                />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+
+                    {/* Recent Blocks */}
+                    <div className="glass-card overflow-hidden">
+                        <div className="p-6 border-b border-slate-100">
+                            <h3 className="text-lg font-bold flex items-center gap-2">
+                                <Box className="w-5 h-5 text-emerald-500" />
+                                Recent Blocks
+                            </h3>
+                        </div>
+                        <div className="divide-y divide-slate-100">
+                            {Array.from({ length: 5 }, (_, i) => ({
+                                blockNumber: logs.length + 42 - i,
+                                timestamp: new Date(Date.now() - i * 120000).toLocaleString(),
+                                transactions: Math.floor(Math.random() * 5) + 1,
+                                gasUsed: Math.floor(Math.random() * 10000) + 20000,
+                                miner: `0x${Math.random().toString(16).substr(2, 8)}...${Math.random().toString(16).substr(2, 8)}`
+                            })).map((block, i) => (
+                                <div key={i} className="p-6 hover:bg-slate-50/50 transition-colors">
+                                    <div className="flex items-center justify-between mb-3">
+                                        <div className="flex items-center gap-3">
+                                            <div className="p-2 bg-emerald-500/10 rounded-lg">
+                                                <Box className="w-4 h-4 text-emerald-500" />
+                                            </div>
+                                            <div>
+                                                <p className="font-bold text-slate-900">Block #{block.blockNumber}</p>
+                                                <p className="text-sm text-slate-500">{block.timestamp}</p>
+                                            </div>
+                                        </div>
+                                        <div className="text-right">
+                                            <p className="text-sm font-bold text-slate-700">{block.transactions} txns</p>
+                                            <p className="text-xs text-slate-400">{block.gasUsed.toLocaleString()} gas</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-xs text-slate-400">Miner:</span>
+                                            <span className="font-mono text-xs text-slate-600">{block.miner}</span>
+                                        </div>
+                                        <button className="text-xs font-bold text-cyan-500 hover:text-cyan-600 transition-colors">
+                                            View Details →
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Node Status */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {[
+                            { name: 'Battery Node 1', status: 'Active', latency: '12ms', location: 'Delhi, India' },
+                            { name: 'Battery Node 2', status: 'Active', latency: '8ms', location: 'Mumbai, India' },
+                            { name: 'Power Plant Hub', status: 'Active', latency: '15ms', location: 'Pune, India' }
+                        ].map((node, i) => (
+                            <div key={i} className="glass-card p-6">
+                                <div className="flex items-center justify-between mb-4">
+                                    <div className="flex items-center gap-3">
+                                        <div className={`w-3 h-3 rounded-full ${node.status === 'Active' ? 'bg-emerald-500' : 'bg-red-500'}`}></div>
+                                        <h4 className="font-bold text-slate-900">{node.name}</h4>
+                                    </div>
+                                    <span className={`px-2 py-1 text-xs font-bold rounded-full ${
+                                        node.status === 'Active' 
+                                            ? 'bg-emerald-500/10 text-emerald-600' 
+                                            : 'bg-red-500/10 text-red-600'
+                                    }`}>
+                                        {node.status}
+                                    </span>
+                                </div>
+                                <div className="space-y-2">
+                                    <div className="flex justify-between">
+                                        <span className="text-sm text-slate-500">Latency</span>
+                                        <span className="text-sm font-bold text-slate-900">{node.latency}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span className="text-sm text-slate-500">Location</span>
+                                        <span className="text-sm font-bold text-slate-900">{node.location}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </motion.div>
+            )}
+        {/* </AnimatePresence> */}
 
         {/* Transaction Receipt Modal */}
         <AnimatePresence>
@@ -1010,7 +1993,7 @@ const App = () => {
                 </motion.div>
             )}
         </AnimatePresence>
-      </main>
+      </div>
     </div>
   );
 };

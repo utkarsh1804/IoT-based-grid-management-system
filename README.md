@@ -1,18 +1,18 @@
-# 🛡️ IoT-Ledger: Secure IoT Data Management Framework
+# � Smart Battery Management System
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/your-site-id/deploy-status)](https://app.netlify.com/sites/your-site-name/deploys)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A lightweight, scalable blockchain-based framework designed for secure IoT data integration across a decentralized network.
+An intelligent battery charging management system that uses AI-powered predictions, weather data, and power plant voltage fluctuations to optimize battery charging schedules and ensure grid stability.
 
 ## 🌟 Features
 
-- **🔐 Secure Data Anchoring**: Every IoT data point is cryptographically hashed and stored on Ethereum blockchain
-- **📊 Real-time Analytics**: Live dashboard with energy consumption monitoring and weather integration
-- **🌤️ Advanced Weather API**: 7-day forecasts, UV index, precipitation alerts, and location-based weather adjustments
-- **⚡ Smart Contracts**: Solidity-based data integrity verification with device management
-- **🎨 Modern UI**: Glassmorphism design with responsive charts and animations
-- **🔄 Auto-Simulation**: Realistic IoT data streaming with weather-based consumption adjustments
+- **🧠 LSTM AI Predictions**: Machine learning model for optimal charging predictions
+- **🌤️ Weather-Integrated Charging**: Adjusts charging based on weather conditions and solar potential
+- **⚡ Power Plant Monitoring**: Real-time voltage fluctuation monitoring from power plants
+- **🔄 Smart Charging Control**: Automated charging schedules based on grid stability and battery health
+- **📊 Real-time Analytics**: Live dashboard with battery status, SOC monitoring, and performance metrics
+- **⛓️ Blockchain Security**: Immutable logging of all battery operations on Ethereum
 
 ---
 
@@ -28,8 +28,8 @@ A lightweight, scalable blockchain-based framework designed for secure IoT data 
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/iot-blockchain-framework.git
-   cd iot-blockchain-framework
+   git clone https://github.com/your-username/smart-battery-management.git
+   cd smart-battery-management
    ```
 
 2. **Install dependencies**
@@ -58,7 +58,7 @@ A lightweight, scalable blockchain-based framework designed for secure IoT data 
    npm run start:sim
    ```
 
-Visit `http://localhost:5173` for the dashboard and `http://localhost:5000` for the API.
+Visit `http://localhost:5173` for the battery management dashboard and `http://localhost:5000` for the API.
 
 ---
 
@@ -74,7 +74,7 @@ Visit `http://localhost:5173` for the dashboard and `http://localhost:5000` for 
 2. **Environment Variables**
    Set these in Netlify dashboard:
    ```
-   RPC_URL=https://your-infura-endpoint
+   RPC_URL=https://sepolia.infura.io/v3/YOUR_INFURA_KEY
    CONTRACT_ADDRESS=your_deployed_contract_address
    LOCATION=Delhi,IN
    ```
@@ -106,55 +106,59 @@ npm run deploy:contract
 
 ---
 
-## 🧩 Architecture
+## 🧩 System Architecture
 
-### System Components
+### Core Components
 
-#### 1. **Frontend Dashboard** (`/client`)
-- **Framework**: React 18 + Vite
-- **Styling**: Tailwind CSS + Framer Motion
-- **Charts**: Recharts
-- **Blockchain**: Ethers.js integration
+#### 1. **AI Prediction Engine** (`/server`)
+- **LSTM Model**: Time-series predictions for optimal charging
+- **Weather Integration**: Solar potential and weather impact analysis
+- **Grid Stability**: Power plant voltage fluctuation monitoring
+- **Battery Health**: SOC, temperature, and efficiency calculations
 
-#### 2. **Backend API** (`/server`)
-- **Runtime**: Node.js + Express
-- **Database**: MongoDB (optional, uses in-memory for demo)
-- **Weather**: Open-Meteo API integration
-- **Blockchain**: Ethereum RPC connection
+#### 2. **Battery Management Dashboard** (`/client`)
+- **Real-time Monitoring**: Live battery status and charging progress
+- **Control Interface**: Manual charging controls and target SOC settings
+- **AI Insights**: LSTM predictions and recommended actions
+- **Analytics**: Performance metrics and historical data
 
 #### 3. **Smart Contracts** (`/contracts`)
-- **Language**: Solidity 0.8.20
-- **Framework**: Hardhat
-- **Features**: Device registration, data hashing, immutable storage
+- **Data Integrity**: Immutable logging of battery operations
+- **Device Management**: Battery unit registration and authentication
+- **Audit Trail**: Complete blockchain-verified transaction history
 
-#### 4. **IoT Simulation** (`/simulated_iot`)
-- **Data Source**: CSV energy consumption datasets
-- **Weather Integration**: Dynamic consumption adjustments
-- **Streaming**: Real-time data simulation
+#### 4. **IoT Data Simulation** (`/simulated_iot`)
+- **Power Plant Data**: Realistic voltage fluctuation simulation
+- **Battery Telemetry**: SOC, voltage, current, and temperature data
+- **Weather Impact**: Dynamic adjustments based on weather conditions
 
-### Data Flow
+### Data Flow Architecture
 ```
-IoT Device → CSV Parser → Weather Adjustment → API Server → Smart Contract → Blockchain
-                                      ↓
-                            MongoDB Storage ← Dashboard ← API Server
+Power Plant API → Voltage Analysis → LSTM Model → Charging Decision
+       ↓                    ↓             ↓             ↓
+   Weather API → Weather Impact → Grid Stability → Battery Control
+       ↓                    ↓             ↓             ↓
+   Battery Sensors → Health Monitoring → AI Predictions → Smart Charging
 ```
 
 ---
 
 ## 📊 API Endpoints
 
-### Core Endpoints
-- `GET /api` - Health check
-- `GET /api/stats` - System statistics
-- `GET /api/logs` - Recent data entries
-- `POST /api/log` - Submit new IoT data
+### Battery Management
+- `GET /api/battery/:id` - Get battery status and health
+- `POST /api/battery/:id/control` - Control charging (start/stop/set target)
+- `GET /api/power-plant` - Power plant voltage and grid status
+- `GET /api/predictions` - LSTM AI predictions for next 24 hours
 
-### Weather API
+### Weather Integration
 - `GET /api/weather` - Current weather + 7-day forecast
 - `GET /api/weather?location=Mumbai,IN` - Weather for specific location
 
-### Supported Locations
-Delhi, Mumbai, Bangalore, Chennai, Kolkata, Hyderabad, Pune, Ahmedabad, Jaipur, Lucknow, New York, London, Tokyo, Sydney
+### System Monitoring
+- `GET /api` - System health check
+- `GET /api/stats` - Battery fleet statistics
+- `GET /api/logs` - Blockchain-verified transaction logs
 
 ---
 
@@ -165,7 +169,7 @@ Create `.env` files in respective directories:
 
 **Server** (`.env`):
 ```env
-MONGO_URI=mongodb://localhost:27017/iotBlockchain
+MONGO_URI=mongodb://localhost:27017/batteryManagement
 RPC_URL=http://127.0.0.1:7545
 PRIVATE_KEY=your_ganache_private_key
 CONTRACT_ADDRESS=deployed_contract_address
@@ -191,30 +195,40 @@ npx hardhat test
 
 ### API Testing
 ```bash
-# Health check
-curl http://localhost:5000/api
+# Battery status
+curl http://localhost:5000/api/battery/BATTERY-001
 
-# Weather data
-curl http://localhost:5000/api/weather
+# AI predictions
+curl http://localhost:5000/api/predictions
+
+# Power plant data
+curl http://localhost:5000/api/power-plant
 ```
 
 ---
 
-## 📈 Performance Features
+## 📈 AI & Machine Learning Features
 
-- **Weather-Adjusted IoT Data**: Energy consumption varies based on weather conditions
-- **Real-time Updates**: 3-second refresh intervals
-- **Optimized Builds**: Code-split bundles for faster loading
-- **Caching**: Smart contract data caching for better UX
+### LSTM Prediction Model
+- **Time Series Analysis**: 24-hour SOC and voltage predictions
+- **Multi-factor Input**: Weather, grid stability, battery health
+- **Confidence Scoring**: Prediction reliability assessment
+- **Adaptive Learning**: Continuous model improvement
+
+### Intelligent Charging Logic
+- **Weather-Based**: Adjusts for solar potential and temperature
+- **Grid Stability**: Prevents charging during voltage fluctuations
+- **Battery Health**: Optimizes charging for longevity
+- **Cost Optimization**: Charges during off-peak hours
 
 ---
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
+2. Create a feature branch (`git checkout -b feature/smart-charging-algorithm`)
+3. Commit changes (`git commit -m 'Add smart charging algorithm'`)
+4. Push to branch (`git push origin feature/smart-charging-algorithm`)
 5. Open a Pull Request
 
 ---
@@ -227,18 +241,20 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- **Open-Meteo API** for weather data
-- **Ethereum** for blockchain infrastructure
-- **Hardhat** for smart contract development
-- **Vite** for lightning-fast builds
+- **Open-Meteo API** for comprehensive weather data
+- **TensorFlow.js** for client-side ML capabilities
+- **Ethereum** for secure, decentralized data integrity
+- **Hardhat** for professional smart contract development
+- **Vite** for lightning-fast development and builds
 
 ---
 
 ## 📞 Support
 
 For questions or issues:
-- Open an [issue](https://github.com/your-username/iot-blockchain-framework/issues)
-- Check the [technical documentation](TECHNICAL_DOCS.md)# 🛡️ IoT-Ledger: Secure IoT Data Management Framework
+- Open an [issue](https://github.com/your-username/smart-battery-management/issues)
+- Check the [technical documentation](TECHNICAL_DOCS.md)
+- Review the [deployment guide](DEPLOYMENT.md)# 🛡️ IoT-Ledger: Secure IoT Data Management Framework
 
 A lightweight, scalable blockchain-based framework designed for secure IoT data integration across a decentralized network.
 
