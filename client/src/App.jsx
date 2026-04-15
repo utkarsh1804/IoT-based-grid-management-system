@@ -783,6 +783,7 @@ const App = () => {
         </AnimatePresence>
 
         {/* <AnimatePresence mode="wait"> */}
+        <AnimatePresence mode="wait">
             {activeTab === 'dashboard' && (
                 <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} key="dash">
                     <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
@@ -1770,7 +1771,7 @@ const App = () => {
                     </div>
                 </motion.div>
             )}
-        {/* </AnimatePresence> */}
+        </AnimatePresence>
 
         {/* Transaction Receipt Modal */}
         <AnimatePresence>
